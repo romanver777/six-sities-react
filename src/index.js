@@ -4,9 +4,18 @@ import App from './components/app/app';
 
 const init = () => {
 
-  ReactDom.render(
+  const items = [
+    `Beautiful &amp; luxurious apartment at great location`,
+    `Wood and stone place`,
+    `Best stone place`,
+    `WoodHouse`,
+    `Cozy Apts`
+  ];
 
-      <App/>,
+  ReactDom.render(
+      <App
+        items={items}
+      />,
       document.getElementById(`root`)
   );
 };
