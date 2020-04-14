@@ -1,20 +1,55 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '../card/card';
 
-const CardList = (props) => {
+class CardList extends React.Component {
 
-	const {items} = props;
+	constructor(props) {
+		super(props);
 
-	return (
-		items.map((item, ind) => {
+		this.state = {
+			card: {}
+		};
+	}
 
-			return <Card
-				item={item}
-				key={item.title + ind}
-			/>
-		})
-	)
+	mouseOverHandler = (e) => {
 
+		let cardID = e.target.closest('.place-card').id;
+		let item = this.props.items[cardID];
+
+		this.setState((prevState) => {
+
+			return (
+				{
+					...prevState,
+					card: item
+				}
+			)
+		});
+	};
+
+	render() {
+
+		const {items} = this.props;
+
+		return (
+
+			items.map((item, ind) => {
+
+				return <Card
+					item={item}
+					index={ind}
+					key={item.title + ind}
+					onMouseOver={this.mouseOverHandler}
+				/>
+			})
+		)
+	}
+
+}
+
+CardList.propTypes = {
+	items: PropTypes.array.isRequired
 };
 
 export default CardList;
