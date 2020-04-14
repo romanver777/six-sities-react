@@ -7,13 +7,13 @@ const Card = (props) => {
 
   return (
     <article className="cities__place-card place-card" id={index} onMouseOver={onMouseOver}>
-			{ item.mark
-				? (
-				<div className="place-card__mark">
-				  <span>{item.mark}</span>
-				</div>)
+      { item.mark
+        ? (
+          <div className="place-card__mark">
+            <span>{item.mark}</span>
+          </div>)
         : null
-			}
+      }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={item.img} width="260" height="200" alt="Place image"/>
@@ -34,7 +34,7 @@ const Card = (props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            {/*<span style="width: 93%"></span>*/}
+            {/* <span style="width: 93%"></span>*/}
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

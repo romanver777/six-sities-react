@@ -1,13 +1,13 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './app';
+import CardList from './card-list';
 import mocks from '../../mocks/offers';
 
-it(`App renders`, () => {
-  const tree = renderer.create(<App
+it(`CardList renders`, () => {
+
+  const tree = renderer.create(<CardList
     items={mocks}
-  />)
-	.toJSON();
+  />).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
