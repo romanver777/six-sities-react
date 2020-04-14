@@ -3,6 +3,8 @@
 exports[`Card renders 1`] = `
 <article
   className="cities__place-card place-card"
+  id={0}
+  onMouseOver={[Function]}
 >
   <div
     className="place-card__mark"
@@ -38,12 +40,14 @@ exports[`Card renders 1`] = `
         <b
           className="place-card__price-value"
         >
-          €120
+          €
+          120
         </b>
         <span
           className="place-card__price-text"
         >
-          / night
+          / 
+          night
         </span>
       </div>
       <button
@@ -54,7 +58,11 @@ exports[`Card renders 1`] = `
           className="place-card__bookmark-icon"
           height="19"
           width="18"
-        />
+        >
+          <use
+            xlinkHref="#icon-bookmark"
+          />
+        </svg>
         <span
           className="visually-hidden"
         >
@@ -81,9 +89,8 @@ exports[`Card renders 1`] = `
       <a
         className="card__title"
         href="#"
-        onClick={[Function]}
       >
-        a
+        Beautiful & luxurious apartment at great location
       </a>
     </h2>
     <p
