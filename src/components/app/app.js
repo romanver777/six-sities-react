@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../card/card';
+// import Card from '../card/card';
 import CardList from '../card-list/card-list';
 
 class App extends React.PureComponent {
@@ -121,7 +121,7 @@ class App extends React.PureComponent {
       </div>
 		);
 	}
-};
+}
 
 App.propTypes = {
   items: PropTypes.array.isRequired

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 const Card = (props) => {
 
-  const {item} = props;
+  const {item, index, onMouseOver} = props;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" id={index} onMouseOver={onMouseOver}>
 			{ item.mark
 				? (
 				<div className="place-card__mark">
@@ -49,6 +49,8 @@ const Card = (props) => {
 
 Card.propTypes = {
   item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onMouseOver: PropTypes.func.isRequired
 };
 
 export default Card;
