@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import Card from '../card/card';
 import CardList from '../card-list/card-list';
+import Map from '../map/map';
 
 class App extends React.PureComponent {
 
@@ -113,7 +114,11 @@ class App extends React.PureComponent {
                 </div>
               </section>
               <div className="cities__right-section">
-                <section className="cities_map map"></section>
+                <section className="cities_map map">
+
+                  <Map/>
+
+                </section>
               </div>
             </div>
           </div>
