@@ -116,7 +116,9 @@ class App extends React.PureComponent {
               <div className="cities__right-section">
                 <section className="cities_map map">
 
-                  <Map/>
+                  <Map
+                    items={items}
+                  />
 
                 </section>
               </div>
