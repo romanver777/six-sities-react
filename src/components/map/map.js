@@ -8,7 +8,7 @@ class Map extends React.PureComponent {
 		super (props);
 	}
 
-	initMap = () => {
+	initMap = (offers) => {
 
 		const city = [52.38333, 4.9];
 		const icon = leaflet.icon({
@@ -30,28 +30,33 @@ class Map extends React.PureComponent {
 			})
 			.addTo(map);
 
-		const offerCords = [52.3709553943508, 4.89309666406198];
-		leaflet
-			.marker(offerCords, {icon})
-			.addTo(map);
+		for (const offer of offers) {
 
+			const offerCoord = offer.coords;
+
+			leaflet
+				.marker(offerCoord, {icon})
+				.addTo(map);
+		}
 	};
 
 	componentDidMount () {
 
-		this.initMap();
+		const {items} = this.props;
+
+		this.initMap(items);
 	}
 
 	render () {
 
-		const {} = this.props;
+		const {items} = this.props;
 
-		return <div id="map">Map</div>
+		return <div id="map"></div>
 	}
 }
 
 Map.propTypes = {
-
+	items: PropTypes.array.isRequired
 };
 
 export default Map;

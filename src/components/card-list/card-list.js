@@ -12,18 +12,9 @@ class CardList extends React.Component {
 		};
 	}
 
-	mouseOverHandler(e) {
+	mouseOverHandler = (item) => {
 
-		let cardID = e.target.closest('.place-card').id;
-		let item = this.props.items[cardID];
-
-		this.setState((prevState) => {
-
-			return {
-				...prevState,
-				card: item
-			}
-		});
+		this.setState( {card: item} );
 	};
 
 	render() {
@@ -43,7 +34,6 @@ class CardList extends React.Component {
 			})
 		)
 	}
-
 }
 
 CardList.propTypes = {
