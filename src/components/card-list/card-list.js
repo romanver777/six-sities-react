@@ -7,15 +7,9 @@ class CardList extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			card: {}
-		};
 	}
 
-	mouseOverHandler = (item) => {
-
-		this.setState( {card: item} );
-	};
+	handleChange = (item) => this.props.onChange(item);
 
 	render() {
 
@@ -29,7 +23,7 @@ class CardList extends React.Component {
 					item={item}
 					index={ind}
 					key={item.title + ind}
-					onMouseOver={this.mouseOverHandler}
+					onChange={this.handleChange}
 				/>
 			})
 		)
