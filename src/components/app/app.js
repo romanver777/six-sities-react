@@ -21,7 +21,9 @@ class App extends React.PureComponent {
       />
     }
 
-    return <OfferProperty offer={items[screen]}/>
+    return <OfferProperty items={items}
+                          offer={items[screen]}
+    />
 
   };
 
