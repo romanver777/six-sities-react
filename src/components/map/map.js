@@ -6,12 +6,14 @@ class Map extends React.PureComponent {
 
 	constructor (props) {
 		super (props);
+
+		this.items = props.items;
 	}
 
-	initMap = (offers) => {
+	initMap = (items, offer) => {
 
 		const city = [52.38333, 4.9];
-		const icon = leaflet.icon({
+		let icon = leaflet.icon({
 			iconUrl: `img/pin.svg`,
 			iconSize: [30, 30]
 		});
@@ -30,9 +32,17 @@ class Map extends React.PureComponent {
 			})
 			.addTo(map);
 
-		for (const offer of offers) {
+		for (let i = 0; i < items.length; i++) {
 
-			const offerCoord = offer.coords;
+			const offerCoord = items[i].coords;
+
+			if (offer) {
+
+				(i < 1) ? icon = leaflet.icon({iconUrl: `img/pin-active.svg`,
+																			 iconSize: [30, 30]})
+								: icon = leaflet.icon({iconUrl: `img/pin.svg`,
+																			 iconSize: [30, 30]});
+			}
 
 			leaflet
 				.marker(offerCoord, {icon})
@@ -40,11 +50,62 @@ class Map extends React.PureComponent {
 		}
 	};
 
+	getNhoods = (offer, items) => {
+
+		let arr = [];
+		const from = leaflet.latLng(offer.coords);
+
+		arr.push({
+			id: offer.id,
+			length: 0
+		});
+
+		for (const it of items) {
+
+			if (it.id !== offer.id) {
+
+				let to = leaflet.latLng(it.coords);
+
+				arr.push({
+					id: it.id,
+					length: from.distanceTo(to)
+				});
+			}
+		}
+		return arr.sort((prev, next) => prev.length - next.length);
+	};
+
+	filterItems = (nhoods, items) => {
+
+		let arr = [];
+		const number = 3;
+
+		for (const nh of nhoods) {
+
+			for (const it of items) {
+
+				if (it.id == nh.id) {
+
+					arr.push(it);
+				}
+			}
+		}
+		if (arr.length > number + 1) arr = arr.slice(0, number);
+
+		return arr;
+	};
+
 	componentDidMount () {
 
-		const {items} = this.props;
+		const {offer} = this.props;
 
-		this.initMap(items);
+		if (offer) {
+
+			const nhoods = this.getNhoods(offer, this.items);
+
+			this.items = this.filterItems(nhoods, this.items);
+		}
+		this.initMap(this.items, offer);
 	}
 
 	render () {
