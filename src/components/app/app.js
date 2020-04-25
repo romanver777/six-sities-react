@@ -13,18 +13,17 @@ class App extends React.PureComponent {
     }
   }
 
-  static getScreen = (screen, items, onChange) => {
+  static getScreen = (screen, items, onClick) => {
     if(screen < 0) {
 			return <Main
         items={items}
-        onChange={onChange}
+        onClick={onClick}
       />
     }
 
     return <OfferProperty items={items}
                           offer={items[screen]}
     />
-
   };
 
   render() {

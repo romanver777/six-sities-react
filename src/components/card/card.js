@@ -5,10 +5,17 @@ const Card = (props) => {
 
   const {item} = props;
 
-	const handleClick = (e) => props.onChange(e);
+	const handleClick = (e) => props.onClick(e);
+	const handleMouseOver = (e) => props.onMouseOver(e);
+	const handleMouseLeave = () => props.onMouseLeave();
 
   return (
-    <article className="cities__place-card place-card" id={item.id} onClick={() => handleClick(item)}>
+    <article className="cities__place-card place-card"
+             id={item.id}
+             onClick={() => handleClick(item)}
+             onMouseOver={() => handleMouseOver(item)}
+             onMouseLeave={handleMouseLeave}
+    >
       { item.mark
         ? (
           <div className="place-card__mark">
@@ -36,7 +43,7 @@ const Card = (props) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            {/* <span style="width: 93%"></span>*/}
+            <span style={{width: 93 + '%'}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -51,7 +58,9 @@ const Card = (props) => {
 
 Card.propTypes = {
   item: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
+  handleClick: PropTypes.func,
+  handleMouseOver: PropTypes.func,
+  handleMouseLeave: PropTypes.func,
 };
 
 export default Card;

@@ -2,36 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
 
-class CardList extends React.Component {
+const CardList = (props) => {
 
-	constructor(props) {
-		super(props);
+	const {items} = props;
 
-	}
+	const handleClick = (item) => props.onClick(item);
+	const handleMouseOver = (item) => props.onMouseOver(item);
+	const handleMouseLeave = (e) => props.onMouseLeave(e);
 
-	handleChange = (item) => this.props.onChange(item);
+	return (
 
-	render() {
+		items.map((item) => {
 
-		const {items} = this.props;
-
-		return (
-
-			items.map((item, ind) => {
-
-				return <Card
-					item={item}
-					index={ind}
-					key={item.title + ind}
-					onChange={this.handleChange}
-				/>
-			})
-		)
-	}
-}
+			return <Card
+				item={item}
+				key={item.id}
+				onClick={handleClick}
+				onMouseOver={handleMouseOver}
+				onMouseLeave={handleMouseLeave}
+			/>
+		})
+	)
+};
 
 CardList.propTypes = {
-	items: PropTypes.array.isRequired
+	items: PropTypes.array.isRequired,
+	onClick: PropTypes.func,
+	onMouseOver: PropTypes.func,
+	onMouseLeave: PropTypes.func,
 };
 
 export default CardList;
