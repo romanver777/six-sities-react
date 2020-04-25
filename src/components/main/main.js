@@ -7,13 +7,25 @@ class Main extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			hoverItem: null
+		}
 	}
 
-	handleChange = (item) => this.props.onChange(item);
+	handleClick = (item) => this.props.onClick(item);
+
+	handleMouseOver = (item) => this.setState((prevState) => {
+
+		return (prevState.hoverItem !== item) ? {hoverItem: item} : null;
+	});
+
+	handleMouseLeave = () => this.setState({hoverItem: null});
 
 	render() {
 
 		const {items} = this.props;
+		const {hoverItem} = this.state;
 
 		return (
 			<div className="page page--gray page--main">
@@ -88,7 +100,7 @@ class Main extends React.PureComponent {
 									<span className="places__sorting-type" tabIndex="0">
                   Popular
                     <svg className="places__sorting-arrow" width="7" height="4">
-                      {/* <use xlink:href="#icon-arrow-select"></use>*/}
+                      <use xlinkHref="#icon-arrow-select"/>
                     </svg>
                   </span>
 									<ul className="places__options places__options--custom places__options--opened">
@@ -110,7 +122,9 @@ class Main extends React.PureComponent {
 
 									<CardList
 										items={items}
-										onChange={this.handleChange}
+										onClick={this.handleClick}
+										onMouseOver={this.handleMouseOver}
+										onMouseLeave={this.handleMouseLeave}
 									/>
 
 								</div>
@@ -120,6 +134,7 @@ class Main extends React.PureComponent {
 
 									<Map
 										items={items}
+										offer={hoverItem}
 									/>
 
 								</section>
@@ -133,7 +148,8 @@ class Main extends React.PureComponent {
 }
 
 Main.propTypes = {
-	items: PropTypes.array.isRequired
+	items: PropTypes.array.isRequired,
+	onClick: PropTypes.func,
 };
 
 export default Main;

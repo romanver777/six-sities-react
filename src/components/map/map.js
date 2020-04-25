@@ -7,10 +7,12 @@ class Map extends React.PureComponent {
 	constructor (props) {
 		super (props);
 
-		this.items = props.items;
+		this.state = {
+			markers: []
+		}
 	}
 
-	initMap = (items, offer) => {
+	initMap = (items, offer = null) => {
 
 		const city = [52.38333, 4.9];
 		let icon = leaflet.icon({
@@ -32,6 +34,8 @@ class Map extends React.PureComponent {
 			})
 			.addTo(map);
 
+		let markers = [];
+
 		for (let i = 0; i < items.length; i++) {
 
 			const offerCoord = items[i].coords;
@@ -44,10 +48,16 @@ class Map extends React.PureComponent {
 																			 iconSize: [30, 30]});
 			}
 
-			leaflet
-				.marker(offerCoord, {icon})
-				.addTo(map);
+			markers.push(leaflet.marker(offerCoord, {icon}));
+
+			leaflet.marker(offerCoord, {icon})
+						 .addTo(map);
 		}
+
+		this.setState({
+			markers: markers,
+			map: map
+		});
 	};
 
 	getNhoods = (offer, items) => {
@@ -84,7 +94,7 @@ class Map extends React.PureComponent {
 
 			for (const it of items) {
 
-				if (it.id == nh.id) {
+				if (it.id === nh.id) {
 
 					arr.push(it);
 				}
@@ -97,27 +107,78 @@ class Map extends React.PureComponent {
 
 	componentDidMount () {
 
-		const {offer} = this.props;
+		const {items, offer} = this.props;
 
 		if (offer) {
 
-			const nhoods = this.getNhoods(offer, this.items);
+			const nhoods = this.getNhoods(offer, items);
+			const its = this.filterItems(nhoods, items);
 
-			this.items = this.filterItems(nhoods, this.items);
+			this.initMap(its, offer);
+
+		}	else {
+
+			this.initMap(items);
 		}
-		this.initMap(this.items, offer);
+	}
+
+	changeIconsOnHover = (item, markers) => {
+
+		let newMarkers = [];
+
+		for (const it of markers) {
+
+			let icon;
+
+			if (item) {
+				if ( it._latlng.lat === item.coords[0] &&
+						 it._latlng.lng === item.coords[1] ) {
+
+					icon = leaflet.icon({
+						iconUrl: `img/pin-active.svg`,
+						iconSize: [30, 30]
+					});
+
+				} else {
+
+					icon = leaflet.icon({
+						iconUrl: `img/pin.svg`,
+						iconSize: [30, 30]
+					});
+				}
+			} else {
+
+				icon = leaflet.icon({
+					iconUrl: `img/pin.svg`,
+					iconSize: [30, 30]
+				});
+			}
+			newMarkers.push(leaflet.marker(it._latlng, {icon}));
+
+			leaflet
+				.marker(it._latlng, {icon})
+				.addTo(this.state.map);
+		}
+	};
+
+	componentDidUpdate () {
+		const {offer} = this.props;
+		const {markers} = this.state;
+
+		this.changeIconsOnHover(offer, markers);
 	}
 
 	render () {
 
 		const {items} = this.props;
 
-		return <div id="map"></div>
+		return <div id="map" data={items}></div>
 	}
 }
 
 Map.propTypes = {
-	items: PropTypes.array.isRequired
+	items: PropTypes.array.isRequired,
+	offer: PropTypes.object,
 };
 
 export default Map;
