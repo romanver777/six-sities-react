@@ -25,7 +25,6 @@ class Main extends React.PureComponent {
 	render() {
 
 		const {items} = this.props;
-		const {hoverItem} = this.state;
 
 		return (
 			<div className="page page--gray page--main">
@@ -134,7 +133,7 @@ class Main extends React.PureComponent {
 
 									<Map
 										items={items}
-										offer={hoverItem}
+										offerHover={this.state.hoverItem}
 									/>
 
 								</section>
