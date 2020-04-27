@@ -23,6 +23,7 @@ class App extends React.PureComponent {
 
     return <OfferProperty items={items}
                           offer={items[screen]}
+                          onCLick={onClick}
     />
   };
 
@@ -32,9 +33,7 @@ class App extends React.PureComponent {
 
     return App.getScreen(this.state.screen, items, (item) => {
 
-      this.setState((prevState) => (
-        {screen: item.id}
-			));
+      this.setState( {screen: item.id} );
     });
   }
 }

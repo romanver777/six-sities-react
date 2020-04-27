@@ -8,6 +8,7 @@ class Map extends React.PureComponent {
 		super (props);
 
 		this.state = {
+			map: null,
 			markers: []
 		}
 	}
@@ -36,22 +37,35 @@ class Map extends React.PureComponent {
 
 		let markers = [];
 
-		for (let i = 0; i < items.length; i++) {
+		if (offer) {
 
-			const offerCoord = items[i].coords;
+			icon = leaflet.icon(
+				{
+					iconUrl: `img/pin-active.svg`,
+					iconSize: [30, 30]
+				}
+			);
 
-			if (offer) {
+			let mark = leaflet.marker(offer.coords, {icon});
+			mark.addTo(map);
+		}
 
-				(i < 1) ? icon = leaflet.icon({iconUrl: `img/pin-active.svg`,
-																			 iconSize: [30, 30]})
-								: icon = leaflet.icon({iconUrl: `img/pin.svg`,
-																			 iconSize: [30, 30]});
-			}
+		for (const item of items) {
 
-			markers.push(leaflet.marker(offerCoord, {icon}));
+			icon = leaflet.icon(
+				{
+					iconUrl: `img/pin.svg`,
+					iconSize: [30, 30]
+				}
+			);
 
-			leaflet.marker(offerCoord, {icon})
-						 .addTo(map);
+			let mark = leaflet.marker(item.coords, {icon});
+
+			markers.push(mark);
+		}
+
+		for (const it of markers) {
+			it.addTo(map);
 		}
 
 		this.setState({
@@ -60,61 +74,13 @@ class Map extends React.PureComponent {
 		});
 	};
 
-	getNhoods = (offer, items) => {
-
-		let arr = [];
-		const from = leaflet.latLng(offer.coords);
-
-		arr.push({
-			id: offer.id,
-			length: 0
-		});
-
-		for (const it of items) {
-
-			if (it.id !== offer.id) {
-
-				let to = leaflet.latLng(it.coords);
-
-				arr.push({
-					id: it.id,
-					length: from.distanceTo(to)
-				});
-			}
-		}
-		return arr.sort((prev, next) => prev.length - next.length);
-	};
-
-	filterItems = (nhoods, items) => {
-
-		let arr = [];
-		const number = 3;
-
-		for (const nh of nhoods) {
-
-			for (const it of items) {
-
-				if (it.id === nh.id) {
-
-					arr.push(it);
-				}
-			}
-		}
-		if (arr.length > number + 1) arr = arr.slice(0, number);
-
-		return arr;
-	};
-
 	componentDidMount () {
 
 		const {items, offer} = this.props;
 
 		if (offer) {
 
-			const nhoods = this.getNhoods(offer, items);
-			const its = this.filterItems(nhoods, items);
-
-			this.initMap(its, offer);
+			this.initMap(items, offer);
 
 		}	else {
 
@@ -122,21 +88,20 @@ class Map extends React.PureComponent {
 		}
 	}
 
-	changeIconsOnHover = (item, markers) => {
-
-		let newMarkers = [];
+	changeIconsOnHover = (offer, markers) => {
 
 		for (const it of markers) {
 
 			let icon;
+			let mark;
 
-			if (item) {
-				if ( it._latlng.lat === item.coords[0] &&
-						 it._latlng.lng === item.coords[1] ) {
+			if (offer) {
+				if (it._latlng.lat === offer.coords[0] &&
+					it._latlng.lng === offer.coords[1]) {
 
 					icon = leaflet.icon({
-						iconUrl: `img/pin-active.svg`,
-						iconSize: [30, 30]
+						iconUrl: `img/pin.svg`,
+						iconSize: [35, 35]
 					});
 
 				} else {
@@ -153,19 +118,18 @@ class Map extends React.PureComponent {
 					iconSize: [30, 30]
 				});
 			}
-			newMarkers.push(leaflet.marker(it._latlng, {icon}));
-
-			leaflet
-				.marker(it._latlng, {icon})
-				.addTo(this.state.map);
+			it.setIcon(icon);
 		}
+
+
 	};
 
 	componentDidUpdate () {
-		const {offer} = this.props;
+
+		const {offerHover} = this.props;
 		const {markers} = this.state;
 
-		this.changeIconsOnHover(offer, markers);
+			this.changeIconsOnHover(offerHover, markers);
 	}
 
 	render () {
