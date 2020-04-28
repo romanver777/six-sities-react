@@ -36,6 +36,7 @@ class Map extends React.PureComponent {
 			.addTo(map);
 
 		let markers = [];
+		let mark;
 
 		if (offer) {
 
@@ -46,7 +47,7 @@ class Map extends React.PureComponent {
 				}
 			);
 
-			let mark = leaflet.marker(offer.coords, {icon});
+			mark = leaflet.marker(offer.coords, {icon});
 			mark.addTo(map);
 		}
 
@@ -59,7 +60,7 @@ class Map extends React.PureComponent {
 				}
 			);
 
-			let mark = leaflet.marker(item.coords, {icon});
+			mark = leaflet.marker(item.coords, {icon});
 
 			markers.push(mark);
 		}
@@ -93,7 +94,6 @@ class Map extends React.PureComponent {
 		for (const it of markers) {
 
 			let icon;
-			let mark;
 
 			if (offer) {
 				if (it._latlng.lat === offer.coords[0] &&
@@ -124,19 +124,26 @@ class Map extends React.PureComponent {
 
 	};
 
-	componentDidUpdate () {
+	componentDidUpdate (prevProps) {
 
-		const {offerHover} = this.props;
+		const {offerHover, items, offer} = this.props;
 		const {markers} = this.state;
 
-			this.changeIconsOnHover(offerHover, markers);
+		if(prevProps.offer !== offer) {
+
+			this.state.map.off();
+			this.state.map.remove();
+			this.initMap(items, offer);
+		}
+
+		this.changeIconsOnHover(offerHover, markers);
 	}
 
 	render () {
 
 		const {items} = this.props;
 
-		return <div id="map" data={items}></div>
+		return <div id="map"></div>
 	}
 }
 

@@ -13,10 +13,11 @@ class OfferProperty extends React.PureComponent{
 		this.state = {
 			neighbourhoods: [],
 			hoverItem: null,
+			offer: this.props.offer
 		}
 	}
 
-	handleClick = (item) => console.log(item);
+	handleClick = (item) => this.setState({offer: item});
 
 	handleMouseOver = (item) => this.setState((prevState) => {
 
@@ -58,7 +59,9 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {items, offer} = this.props;
+		const {items} = this.props;
+		const {offer} = this.state;
+
 		const numberNhoods = 3;
 
 		const neighbourhoods = this.getNhoods(offer, items, numberNhoods);
@@ -69,14 +72,14 @@ class OfferProperty extends React.PureComponent{
 					<div className="container">
 						<div className="header__wrapper">
 							<div className="header__left">
-								<a className="header__logo-link" href="/">
+								<a className="header__logo-link" href="#">
 									<img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
 								</a>
 							</div>
 							<nav className="header__nav">
 								<ul className="header__nav-list">
 									<li className="header__nav-item user">
-										<a className="header__nav-link header__nav-link--profile" href="#">
+										<a className="header__nav-link header__nav-link--profile" href="/">
 											<div className="header__avatar-wrapper user__avatar-wrapper">
 											</div>
 											<span className="header__user-name user__name">Oliver.conner@gmail.com</span>
@@ -92,22 +95,22 @@ class OfferProperty extends React.PureComponent{
 						<div className="property__gallery-container container">
 							<div className="property__gallery">
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/room.jpg" alt="Photo studio"/>
+									<img className="property__image" src="img/room.jpg" alt="studio"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
+									<img className="property__image" src="img/apartment-01.jpg" alt="studio01"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-02.jpg" alt="Photo studio"/>
+									<img className="property__image" src="img/apartment-02.jpg" alt="studio02"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-03.jpg" alt="Photo studio"/>
+									<img className="property__image" src="img/apartment-03.jpg" alt="studio03"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/studio-01.jpg" alt="Photo studio"/>
+									<img className="property__image" src="img/studio-01.jpg" alt="studio04"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
+									<img className="property__image" src="img/apartment-01.jpg" alt="studio05"/>
 								</div>
 							</div>
 						</div>

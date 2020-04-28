@@ -33,8 +33,8 @@ class App extends React.PureComponent {
 
     return App.getScreen(this.state.screen, items, (item) => {
 
-      this.setState( {screen: item.id} );
-    });
+			this.setState( {screen: item.id} );
+		});
   }
 }
 
