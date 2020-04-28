@@ -143,7 +143,12 @@ class Map extends React.PureComponent {
 
 		const {items} = this.props;
 
-		return <div id="map"></div>
+		return (
+			<React.Fragment>
+				<div id="map"></div>
+				<span style={{visibility: 'hidden'}} data={items}/>
+			</React.Fragment>
+		);
 	}
 }
 

@@ -24,9 +24,9 @@ const Card = (props) => {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <button className="buttonLink">
           <img className="place-card__image" src={item.img} width="260" height="200" alt="Place"/>
-        </a>
+        </button>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -48,7 +48,7 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#" className="card__title">{item.title}</a>
+          <button className="card__title buttonLink">{item.title}</button>
         </h2>
         <p className="place-card__type">{item.type}</p>
       </div>
