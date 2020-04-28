@@ -141,7 +141,7 @@ class Main extends React.PureComponent {
 						</div>
 					</div>
 				</main>
-			// </div>
+			</div>
 		);
 	}
 }
