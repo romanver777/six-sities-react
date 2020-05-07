@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import leaflet from 'leaflet';
+
 import ReviewList from '../review-list/review-list';
 import Map from '../map/map';
 import NeghbourhoodList from '../neighbourhood-list/neughbourhood-list';
-import leaflet from 'leaflet';
+import {getIndex} from '../../helpers/helpers';
 
 class OfferProperty extends React.PureComponent{
 
@@ -59,12 +61,16 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {items} = this.props;
+		const {offers, city} = this.props;
 		const {offer} = this.state;
-
+console.log(offers);
+console.log(offer);
 		const numberNhoods = 3;
+		const neighbourhoods = this.getNhoods(offer, offers, numberNhoods);
 
-		const neighbourhoods = this.getNhoods(offer, items, numberNhoods);
+		// const index = getIndex(offers, city);
+		// const items = items[index].offers;
+		// const cityCoord = items[index].coords;
 
 		return (
 			<div className="page">
@@ -269,10 +275,10 @@ class OfferProperty extends React.PureComponent{
 						</div>
 						<section className="property_map map" style={{height: 579 + 'px', marginBottom: 50 + 'px'}}>
 
-							<Map items={neighbourhoods}
-									 offerHover={this.state.hoverItem}
-									 offer={offer}
-							/>
+							{/*<Map items={neighbourhoods}*/}
+									 {/*offerHover={this.state.hoverItem}*/}
+									 {/*offer={offer}*/}
+							{/*/>*/}
 
 						</section>
 					</section>
@@ -298,7 +304,7 @@ class OfferProperty extends React.PureComponent{
 }
 
 OfferProperty.propTypes = {
-	items: PropTypes.array.isRequired,
+	offers: PropTypes.array.isRequired,
 	offer: PropTypes.object.isRequired
 };
 

@@ -13,9 +13,9 @@ class Map extends React.PureComponent {
 		}
 	}
 
-	initMap = (items, offer = null) => {
+	_initMap = (cityCoord, items, offer = null) => {
 
-		const city = [52.38333, 4.9];
+		const city = cityCoord;
 		let icon = leaflet.icon({
 			iconUrl: `img/pin.svg`,
 			iconSize: [30, 30]
@@ -77,19 +77,19 @@ class Map extends React.PureComponent {
 
 	componentDidMount () {
 
-		const {items, offer} = this.props;
+		const {coords, items, offer} = this.props;
 
 		if (offer) {
 
-			this.initMap(items, offer);
+			this._initMap(coords, items, offer);
 
 		}	else {
 
-			this.initMap(items);
+			this._initMap(coords, items);
 		}
 	}
 
-	changeIconsOnHover = (offer, markers) => {
+	_changeIconsOnHover = (offer, markers) => {
 
 		for (const it of markers) {
 
@@ -120,24 +120,30 @@ class Map extends React.PureComponent {
 			}
 			it.setIcon(icon);
 		}
-
-
 	};
 
 	componentDidUpdate (prevProps) {
 
-		const {offerHover, items, offer} = this.props;
+		const {coords, offerHover, items, offer} = this.props;
 		const {markers} = this.state;
 
-		if(prevProps.offer !== offer) {
+		if (prevProps.offer !== offer) {
 
 			this.state.map.off();
 			this.state.map.remove();
-			this.initMap(items, offer);
+			this._initMap(coords, items, offer);
 		}
 
-		this.changeIconsOnHover(offerHover, markers);
+		if (prevProps.coords !== coords) {
+
+			this.state.map.off();
+			this.state.map.remove();
+			this._initMap(coords, items);
+		}
+
+		this._changeIconsOnHover(offerHover, markers);
 	}
+
 
 	render () {
 
@@ -146,7 +152,7 @@ class Map extends React.PureComponent {
 		return (
 			<React.Fragment>
 				<div id="map"></div>
-				<span style={{visibility: 'hidden'}} data={items}/>
+				<span style={{visibility: 'hidden'}} defaultValue={items}/>
 			</React.Fragment>
 		);
 	}

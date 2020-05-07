@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
+import {ActionCreator} from '../../reducer';
 import Main from '../main/main';
 import OfferProperty from '../offer-property/offer-property';
+import {getIndex} from '../../helpers/helpers';
 
 class App extends React.PureComponent {
 
@@ -13,25 +17,30 @@ class App extends React.PureComponent {
     }
   }
 
-  static getScreen = (screen, items, onClick) => {
+  static _getScreen = (screen, props, onClick) => {
+
     if(screen < 0) {
+
 			return <Main
-        items={items}
+        items={props.items}
+        city={props.city}
         onClick={onClick}
+        onCityClick={props.cityClick}
       />
     }
+    const offers = props.items[getIndex(props.items, props.city)].offers;
+    const offer = props.items[getIndex(props.items, props.city)].offers[screen];
 
-    return <OfferProperty items={items}
-                          offer={items[screen]}
+    return <OfferProperty offers={offers}
+                          offer={offer}
+                          city={props.city}
                           onCLick={onClick}
     />
   };
 
   render() {
 
-    const {items} = this.props;
-
-    return App.getScreen(this.state.screen, items, (item) => {
+    return App._getScreen(this.state.screen, this.props, (item) => {
 
 			this.setState( {screen: item.id} );
 		});
@@ -39,7 +48,20 @@ class App extends React.PureComponent {
 }
 
 App.propTypes = {
-  items: PropTypes.array.isRequired
+  items: PropTypes.array.isRequired,
+  city: PropTypes.string.isRequired,
+  cityClick: PropTypes.func.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  city: state.city,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+	cityClick: (city) => dispatch(ActionCreator.setCity(city))
+});
+
+export {App};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
