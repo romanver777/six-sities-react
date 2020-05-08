@@ -165,7 +165,9 @@ class Main extends React.PureComponent {
 
 Main.propTypes = {
 	items: PropTypes.array.isRequired,
-	onClick: PropTypes.func,
+	city: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
+	onCityClick: PropTypes.func.isRequired
 };
 
 export default Main;

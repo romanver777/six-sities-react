@@ -28,12 +28,14 @@ class App extends React.PureComponent {
         onCityClick={props.cityClick}
       />
     }
+
     const offers = props.items[getIndex(props.items, props.city)].offers;
     const offer = props.items[getIndex(props.items, props.city)].offers[screen];
 
-    return <OfferProperty offers={offers}
-                          offer={offer}
+    return <OfferProperty items={props.items}
                           city={props.city}
+                          offer={offer}
+                          offers={offers}
                           onCLick={onClick}
     />
   };

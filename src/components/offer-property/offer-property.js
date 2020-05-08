@@ -61,16 +61,14 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {offers, city} = this.props;
+		const {items, offers, city} = this.props;
 		const {offer} = this.state;
-console.log(offers);
-console.log(offer);
+
 		const numberNhoods = 3;
 		const neighbourhoods = this.getNhoods(offer, offers, numberNhoods);
 
-		// const index = getIndex(offers, city);
-		// const items = items[index].offers;
-		// const cityCoord = items[index].coords;
+		const index = getIndex(items, city);
+		const cityCoord = items[index].coords;
 
 		return (
 			<div className="page">
@@ -275,10 +273,11 @@ console.log(offer);
 						</div>
 						<section className="property_map map" style={{height: 579 + 'px', marginBottom: 50 + 'px'}}>
 
-							{/*<Map items={neighbourhoods}*/}
-									 {/*offerHover={this.state.hoverItem}*/}
-									 {/*offer={offer}*/}
-							{/*/>*/}
+							<Map coords={cityCoord}
+									 items={neighbourhoods}
+									 offerHover={this.state.hoverItem}
+									 offer={offer}
+							/>
 
 						</section>
 					</section>
@@ -304,8 +303,11 @@ console.log(offer);
 }
 
 OfferProperty.propTypes = {
+	items: PropTypes.array.isRequired,
+	city: PropTypes.string.isRequired,
+	offer: PropTypes.object.isRequired,
 	offers: PropTypes.array.isRequired,
-	offer: PropTypes.object.isRequired
+	onCLick: PropTypes.func.isRequired,
 };
 
 export default OfferProperty;
