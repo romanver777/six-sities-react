@@ -159,8 +159,10 @@ class Map extends React.PureComponent {
 }
 
 Map.propTypes = {
+	coords: PropTypes.array.isRequired,
 	items: PropTypes.array.isRequired,
 	offer: PropTypes.object,
+	offerHover: PropTypes.object,
 };
 
 export default Map;
