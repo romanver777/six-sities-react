@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import SortingType from '../sorting-type/sorting-type';
 import CardList from '../card-list/card-list';
 import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
@@ -12,7 +13,8 @@ class Main extends React.PureComponent {
 		super(props);
 
 		this.state = {
-			hoverItem: null
+			hoverItem: null,
+			offers: this.props.items[getIndex(this.props.items, this.props.city)].offers,
 		}
 	}
 
@@ -26,6 +28,59 @@ class Main extends React.PureComponent {
 	handleMouseLeave = () => this.setState({hoverItem: null});
 
 	handleCityClick = (city) => this.props.onCityClick(city);
+
+	handleSortOffers = (option) => {
+
+		let offers = this.state.offers;
+
+		switch (option) {
+
+
+			case `Popular`: {
+				offers = offers.sort((a, b) => {
+
+					if (a.id > b.id) return 1;
+					if (a.id < b.id) return -1;
+					return 0;
+				});
+
+				return offers;
+			}
+
+			case `Price: low to high`: {
+				offers = offers.sort((a, b) => {
+
+					if (a.price > b.price) return 1;
+					if (a.price < b.price) return -1;
+					return 0;
+				});
+
+				return offers;
+			}
+			case `Price: high to low`: {
+				offers = offers.sort((a, b) => {
+
+					if (a.price < b.price) return 1;
+					if (a.price > b.price) return -1;
+					return 0;
+				});
+
+				return offers;
+			}
+			case `Top rated first`: {
+				offers = offers.sort((a, b) => {
+
+					if (a.rating < b.rating) return 1;
+					if (a.rating > b.rating) return -1;
+					return 0;
+				});
+
+				return offers;
+			}
+		}
+
+		this.setState({offers: offers});
+	};
 
 	render() {
 
@@ -66,77 +121,18 @@ class Main extends React.PureComponent {
 											onClick={this.handleCityClick}
 					/>
 
-					{/*<h1 className="visually-hidden">Cities</h1>*/}
-					{/*<div className="tabs">*/}
-						{/*<section className="locations container">*/}
-							{/*<ul className="locations__list tabs__list">*/}
-								{/*<li className="locations__item">*/}
-									{/*<button className="locations__item-link tabs__item buttonLink"*/}
-													{/*onClick={onCityClick}*/}
-									{/*>*/}
-										{/*<span>Paris</span>*/}
-									{/*</button>*/}
-								{/*</li>*/}
-								{/*<li className="locations__item">*/}
-									{/*<button className="locations__item-link tabs__item buttonLink">*/}
-										{/*<span>Cologne</span>*/}
-									{/*</button>*/}
-								{/*</li>*/}
-								{/*<li className="locations__item">*/}
-									{/*<button className="locations__item-link tabs__item buttonLink">*/}
-										{/*<span>Brussels</span>*/}
-									{/*</button>*/}
-								{/*</li>*/}
-								{/*<li className="locations__item">*/}
-									{/*<button className="locations__item-link tabs__item tabs__item--active buttonLink">*/}
-										{/*<span>Amsterdam</span>*/}
-									{/*</button>*/}
-								{/*</li>*/}
-								{/*<li className="locations__item">*/}
-									{/*<button className="locations__item-link tabs__item buttonLink">*/}
-										{/*<span>Hamburg</span>*/}
-									{/*</button>*/}
-								{/*</li>*/}
-								{/*<li className="locations__item">*/}
-									{/*<button className="locations__item-link tabs__item buttonLink">*/}
-										{/*<span>Dusseldorf</span>*/}
-									{/*</button>*/}
-								{/*</li>*/}
-							{/*</ul>*/}
-						{/*</section>*/}
-					{/*</div>*/}
 					<div className="cities">
 						<div className="cities__places-container container">
 							<section className="cities__places places">
 								<h2 className="visually-hidden">Places</h2>
 								<b className="places__found">{offers.length} places to stay in {city}</b>
-								<form className="places__sorting" action="#" method="get">
-									<span className="places__sorting-caption">Sort by</span>
-									<span className="places__sorting-type" tabIndex="0">
-                  Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"/>
-                    </svg>
-                  </span>
-									<ul className="places__options places__options--custom places__options--opened">
-										<li className="places__option places__option--active" tabIndex="0">Popular</li>
-										<li className="places__option" tabIndex="0">Price: low to high</li>
-										<li className="places__option" tabIndex="0">Price: high to low</li>
-										<li className="places__option" tabIndex="0">Top rated first</li>
-									</ul>
-									{/* <!--*/}
-									{/* <select class="places__sorting-type" id="places-sorting">*/}
-									{/* <option class="places__option" value="popular" selected="">Popular</option>*/}
-									{/* <option class="places__option" value="to-high">Price: low to high</option>*/}
-									{/* <option class="places__option" value="to-low">Price: high to low</option>*/}
-									{/* <option class="places__option" value="top-rated">Top rated first</option>*/}
-									{/* </select>*/}
-									{/* -->*/}
-								</form>
+
+								<SortingType onChangeOption={this.handleSortOffers}/>
+
 								<div className="cities__places-list places__list tabs__content">
 
 									<CardList
-										items={offers}
+										items={this.state.offers}
 										onClick={this.handleClick}
 										onMouseOver={this.handleMouseOver}
 										onMouseLeave={this.handleMouseLeave}
