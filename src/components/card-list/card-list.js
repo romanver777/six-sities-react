@@ -2,28 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '../card/card';
 
-const CardList = (props) => {
+class CardList extends React.Component {
 
-	const {items} = props;
+	constructor(props) {
+		super(props);
+		const {items} = this.props.items;
 
-	const handleClick = (item) => props.onClick(item);
-	const handleMouseOver = (item) => props.onMouseOver(item);
-	const handleMouseLeave = (e) => props.onMouseLeave(e);
+		this.state = {
+			items: items,
+		}
 
-	return (
+	}
 
-		items.map((item) => {
+	handleClick = (item) => this.props.onClick(item);
+	handleMouseOver = (item) => this.props.onMouseOver(item);
+	handleMouseLeave = (e) => this.props.onMouseLeave(e);
 
-			return <Card
-				item={item}
-				key={item.id}
-				onClick={handleClick}
-				onMouseOver={handleMouseOver}
-				onMouseLeave={handleMouseLeave}
-			/>
-		})
-	)
-};
+	static getDerivedStateFromProps (props, state) {
+		if(props.items !== state.items){
+			return {
+				...state, ...{items: props.items}
+			}
+		}
+		return null;
+	}
+
+	render() {
+		const {items} = this.props;
+
+		return (
+
+			items.map((item) => {
+
+				return <Card
+					item={item}
+					key={item.id}
+					onClick={this.handleClick}
+					onMouseOver={this.handleMouseOver}
+					onMouseLeave={this.handleMouseLeave}
+				/>
+			})
+		)
+	}
+}
 
 CardList.propTypes = {
 	items: PropTypes.array.isRequired,

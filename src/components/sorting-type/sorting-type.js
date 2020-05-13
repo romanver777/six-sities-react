@@ -35,8 +35,6 @@ class SortingType extends React.PureComponent {
 
 	render() {
 
-		const {} = this.props;
-
 		return (
 			<form className="places__sorting" action="#" method="get">
 				<span className="places__sorting-caption">Sort by</span>

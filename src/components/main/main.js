@@ -7,15 +7,40 @@ import CitiesList from '../cities-list/cities-list';
 import Map from '../map/map';
 import {getIndex} from '../../helpers/helpers';
 
-class Main extends React.PureComponent {
+class Main extends React.Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			hoverItem: null,
-			offers: this.props.items[getIndex(this.props.items, this.props.city)].offers,
+			offers: [],
+		};
+	}
+
+	componentDidMount() {
+		this.setState({offers: this.props.cityOffers});
+	}
+
+	componentDidUpdate(prevProps) {
+
+		if (prevProps.city !== this.props.city) {
+
+			this.handleSortOffers('Popular');
 		}
+	}
+
+	static getDerivedStateFromProps(props, state) {
+
+		if(props.cityOffer !== state.offers) {
+
+			return {
+				...state,
+				offers: props.cityOffers
+			}
+		}
+
+		return null;
 	}
 
 	handleClick = (item) => this.props.onClick(item);
@@ -31,55 +56,48 @@ class Main extends React.PureComponent {
 
 	handleSortOffers = (option) => {
 
-		let offers = this.state.offers;
+		let {offers} = this.state;
 
 		switch (option) {
 
-
-			case `Popular`: {
-				offers = offers.sort((a, b) => {
+			case `Popular`:
+				offers.sort((a, b) => {
 
 					if (a.id > b.id) return 1;
 					if (a.id < b.id) return -1;
 					return 0;
 				});
+				break;
 
-				return offers;
-			}
-
-			case `Price: low to high`: {
-				offers = offers.sort((a, b) => {
+			case `Price: low to high`:
+				offers.sort((a, b) => {
 
 					if (a.price > b.price) return 1;
 					if (a.price < b.price) return -1;
 					return 0;
 				});
+				break;
 
-				return offers;
-			}
-			case `Price: high to low`: {
-				offers = offers.sort((a, b) => {
+			case `Price: high to low`:
+				offers.sort((a, b) => {
 
 					if (a.price < b.price) return 1;
 					if (a.price > b.price) return -1;
 					return 0;
 				});
+				break;
 
-				return offers;
-			}
-			case `Top rated first`: {
-				offers = offers.sort((a, b) => {
+			case `Top rated first`:
+				offers.sort((a, b) => {
 
 					if (a.rating < b.rating) return 1;
 					if (a.rating > b.rating) return -1;
 					return 0;
 				});
-
-				return offers;
-			}
+				break;
 		}
 
-		this.setState({offers: offers});
+		this.setState({offers});
 	};
 
 	render() {
@@ -127,12 +145,15 @@ class Main extends React.PureComponent {
 								<h2 className="visually-hidden">Places</h2>
 								<b className="places__found">{offers.length} places to stay in {city}</b>
 
-								<SortingType onChangeOption={this.handleSortOffers}/>
+								<SortingType
+									key={city}
+									onChangeOption={this.handleSortOffers}
+								/>
 
 								<div className="cities__places-list places__list tabs__content">
 
 									<CardList
-										items={this.state.offers}
+										items={offers}
 										onClick={this.handleClick}
 										onMouseOver={this.handleMouseOver}
 										onMouseLeave={this.handleMouseLeave}
@@ -162,6 +183,7 @@ class Main extends React.PureComponent {
 Main.propTypes = {
 	items: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
+	cityOffers: PropTypes.array.isRequired,
 	onClick: PropTypes.func.isRequired,
 	onCityClick: PropTypes.func.isRequired
 };
