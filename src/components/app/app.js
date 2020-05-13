@@ -19,23 +19,25 @@ class App extends React.PureComponent {
 
   static _getScreen = (screen, props, onClick) => {
 
+		const cityOffers = props.items[getIndex(props.items, props.city)].offers;
+
     if(screen < 0) {
 
 			return <Main
         items={props.items}
         city={props.city}
+        cityOffers={cityOffers}
         onClick={onClick}
         onCityClick={props.cityClick}
       />
     }
 
-    const offers = props.items[getIndex(props.items, props.city)].offers;
-    const offer = props.items[getIndex(props.items, props.city)].offers[screen];
+    const cityOffer = cityOffers[screen];
 
     return <OfferProperty items={props.items}
                           city={props.city}
-                          offer={offer}
-                          offers={offers}
+                          cityOffer={cityOffer}
+                          cityOffers={cityOffers}
                           onCLick={onClick}
     />
   };
@@ -57,6 +59,7 @@ App.propTypes = {
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({

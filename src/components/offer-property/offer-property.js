@@ -15,7 +15,7 @@ class OfferProperty extends React.PureComponent{
 		this.state = {
 			neighbourhoods: [],
 			hoverItem: null,
-			offer: this.props.offer
+			offer: this.props.cityOffer
 		}
 	}
 
@@ -61,11 +61,11 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {items, offers, city} = this.props;
+		const {items, cityOffers, city} = this.props;
 		const {offer} = this.state;
 
 		const numberNhoods = 3;
-		const neighbourhoods = this.getNhoods(offer, offers, numberNhoods);
+		const neighbourhoods = this.getNhoods(offer, cityOffers, numberNhoods);
 
 		const index = getIndex(items, city);
 		const cityCoord = items[index].coords;
@@ -305,8 +305,8 @@ class OfferProperty extends React.PureComponent{
 OfferProperty.propTypes = {
 	items: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
-	offer: PropTypes.object.isRequired,
-	offers: PropTypes.array.isRequired,
+	cityOffer: PropTypes.object.isRequired,
+	cityOffers: PropTypes.array.isRequired,
 	onCLick: PropTypes.func.isRequired,
 };
 
