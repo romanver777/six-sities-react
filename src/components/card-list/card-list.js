@@ -18,15 +18,6 @@ class CardList extends React.Component {
 	handleMouseOver = (item) => this.props.onMouseOver(item);
 	handleMouseLeave = (e) => this.props.onMouseLeave(e);
 
-	static getDerivedStateFromProps (props, state) {
-		if(props.items !== state.items){
-			return {
-				...state, ...{items: props.items}
-			}
-		}
-		return null;
-	}
-
 	render() {
 		const {items} = this.props;
 
