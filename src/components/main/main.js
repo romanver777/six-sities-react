@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SortingType from '../sorting-type/sorting-type';
 import CardList from '../card-list/card-list';
 import CitiesList from '../cities-list/cities-list';
+import CitiesNoPlaces from '../cities-no-places/cities-no-places';
 import Map from '../map/map';
 import {getIndex} from '../../helpers/helpers';
 
@@ -132,7 +133,8 @@ class Main extends React.Component {
 					</div>
 				</header>
 
-				<main className="page__main page__main--index">
+				<main className={offers.length ? 'page__main page__main--index'
+																			 : 'page__main page__main--index page__main--index-empty'}>
 
 					<CitiesList items={items}
 											city={city}
@@ -140,39 +142,44 @@ class Main extends React.Component {
 					/>
 
 					<div className="cities">
-						<div className="cities__places-container container">
-							<section className="cities__places places">
-								<h2 className="visually-hidden">Places</h2>
-								<b className="places__found">{offers.length} places to stay in {city}</b>
 
-								<SortingType
-									key={city}
-									onChangeOption={this.handleSortOffers}
-								/>
+						{offers.length ?
+							<div className="cities__places-container container">
+								<section className="cities__places places">
+									<h2 className="visually-hidden">Places</h2>
+									<b className="places__found">{offers.length} places to stay in {city}</b>
 
-								<div className="cities__places-list places__list tabs__content">
-
-									<CardList
-										items={offers}
-										onClick={this.handleClick}
-										onMouseOver={this.handleMouseOver}
-										onMouseLeave={this.handleMouseLeave}
+									<SortingType
+										key={city}
+										onChangeOption={this.handleSortOffers}
 									/>
 
-								</div>
-							</section>
-							<div className="cities__right-section">
-								<section className="cities_map map">
+									<div className="cities__places-list places__list tabs__content">
 
-									<Map
-										coords={cityCoord}
-										items={offers}
-										offerHover={this.state.hoverItem}
-									/>
+										<CardList
+											items={offers}
+											onClick={this.handleClick}
+											onMouseOver={this.handleMouseOver}
+											onMouseLeave={this.handleMouseLeave}
+										/>
 
+									</div>
 								</section>
+								<div className="cities__right-section">
+									<section className="cities_map map">
+
+										<Map
+											coords={cityCoord}
+											items={offers}
+											offerHover={this.state.hoverItem}
+										/>
+
+									</section>
+								</div>
 							</div>
-						</div>
+
+							: <CitiesNoPlaces city={city}/>
+						}
 					</div>
 				</main>
 			</div>
