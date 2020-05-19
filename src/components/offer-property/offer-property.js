@@ -61,14 +61,14 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {items, cityOffers, city} = this.props;
+		const {hotels, cityOffers, city} = this.props;
 		const {offer} = this.state;
 
 		const numberNhoods = 3;
 		const neighbourhoods = this.getNhoods(offer, cityOffers, numberNhoods);
 
-		const index = getIndex(items, city);
-		const cityCoord = items[index].coords;
+		const index = getIndex(hotels, city);
+		const cityCoord = hotels[index].coords;
 
 		return (
 			<div className="page">
@@ -303,7 +303,7 @@ class OfferProperty extends React.PureComponent{
 }
 
 OfferProperty.propTypes = {
-	items: PropTypes.array.isRequired,
+	hotels: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
 	cityOffer: PropTypes.object.isRequired,
 	cityOffers: PropTypes.array.isRequired,
