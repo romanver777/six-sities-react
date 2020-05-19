@@ -20,7 +20,7 @@ class Main extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({offers: this.props.cityOffers});
+		// this.setState({offers: this.props.cityOffers});
 	}
 
 	componentDidUpdate(prevProps) {
@@ -103,10 +103,10 @@ class Main extends React.Component {
 
 	render() {
 
-		const {items, city} = this.props;
-		const index = getIndex(items, city);
-		const offers = items[index].offers;
-		const cityCoord = items[index].coords;
+		const {hotels, city} = this.props;
+		const index = getIndex(hotels, city);
+		const offers = hotels[index].offers;
+		const cityCoord = hotels[index].coords;
 
 		return (
 			<div className="page page--gray page--main">
@@ -136,7 +136,7 @@ class Main extends React.Component {
 				<main className={offers.length ? 'page__main page__main--index'
 																			 : 'page__main page__main--index page__main--index-empty'}>
 
-					<CitiesList items={items}
+					<CitiesList items={hotels}
 											city={city}
 											onClick={this.handleCityClick}
 					/>
@@ -188,9 +188,9 @@ class Main extends React.Component {
 }
 
 Main.propTypes = {
-	items: PropTypes.array.isRequired,
+	hotels: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
-	cityOffers: PropTypes.array.isRequired,
+	// cityOffers: PropTypes.array.isRequired,
 	onClick: PropTypes.func.isRequired,
 	onCityClick: PropTypes.func.isRequired
 };

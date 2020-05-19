@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../reducer';
+import {getIndex} from '../../helpers/helpers';
+
 import Main from '../main/main';
 import OfferProperty from '../offer-property/offer-property';
-import {getIndex} from '../../helpers/helpers';
 
 class App extends React.PureComponent {
 
@@ -14,17 +15,26 @@ class App extends React.PureComponent {
 
     this.state = {
       screen: -1,
+			isHotelsLoaded: false,
     }
+  }
+
+  componentDidUpdate(prevProps) {
+
+		if (prevProps.hotels !== this.props.hotels) {
+
+			this.setState({isHotelsLoaded: true});
+		}
   }
 
   static _getScreen = (screen, props, onClick) => {
 
-		const cityOffers = props.items[getIndex(props.items, props.city)].offers;
+		const cityOffers = props.hotels[getIndex(props.hotels, props.city)].offers;
 
     if(screen < 0) {
 
 			return <Main
-        items={props.items}
+        hotels={props.hotels}
         city={props.city}
         cityOffers={cityOffers}
         onClick={onClick}
@@ -34,7 +44,7 @@ class App extends React.PureComponent {
 
     const cityOffer = cityOffers[screen];
 
-    return <OfferProperty items={props.items}
+    return <OfferProperty hotels={props.hotels}
                           city={props.city}
                           cityOffer={cityOffer}
                           cityOffers={cityOffers}
@@ -44,22 +54,23 @@ class App extends React.PureComponent {
 
   render() {
 
-    return App._getScreen(this.state.screen, this.props, (item) => {
-
-			this.setState( {screen: item.id} );
-		});
+    return this.state.isHotelsLoaded
+      ? App._getScreen(this.state.screen, this.props, (item) => {
+          this.setState( {screen: item.id} );
+      })
+      : `Loading hotels...`
   }
 }
 
 App.propTypes = {
-  items: PropTypes.array.isRequired,
+  hotels: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
   cityClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
-
+  hotels: state.hotels,
 });
 
 const mapDispatchToProps = (dispatch) => ({
