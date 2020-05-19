@@ -44,7 +44,7 @@ const Operation = {
 
 	loadHotels: () => (dispatch) => {
 
-		return api.get(`http://www.mocky.io/v2/5ec27d992f0000b3bbc3535b`)
+		return api.get(`http://f0420099.xsph.ru/6cities/six-cities.json`)
 			.then((response) => {
 				dispatch(ActionCreator.loadHotels(response.data));
 			});
