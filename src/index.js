@@ -6,21 +6,29 @@ import thunk from 'redux-thunk';
 import {compose} from 'recompose';
 
 import App from './components/app/app';
-import {reducer, Operation} from './reducer';
+import {reducer, Operation, ActionCreator} from './reducer';
+import createAPI from './api';
 
 
 const init = () => {
 
+	const onUnauthorized = () => {
+		store.dispatch(ActionCreator.requireAuthorization(false));
+	};
+
+	const api = createAPI(onUnauthorized);
+
   const store = createStore(
     reducer,
     compose(
-      applyMiddleware(thunk),
+      applyMiddleware(thunk.withExtraArgument(api)),
 			window.__REDUX_DEVTOOLS_EXTENSION__ ?
 				window.__REDUX_DEVTOOLS_EXTENSION__():(f)=>f
     )
 	);
 
   store.dispatch(Operation.loadHotels());
+  store.dispatch(Operation.checkAuth());
 
   ReactDom.render(
     <Provider store={store}>
