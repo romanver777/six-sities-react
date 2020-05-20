@@ -7,6 +7,7 @@ import {getIndex} from '../../helpers/helpers';
 
 import Main from '../main/main';
 import OfferProperty from '../offer-property/offer-property';
+import SignIn from '../sign-in/sign-in';
 
 class App extends React.PureComponent {
 
@@ -30,6 +31,8 @@ class App extends React.PureComponent {
   static _getScreen = (screen, props, onClick) => {
 
 		const cityOffers = props.hotels[getIndex(props.hotels, props.city)].offers;
+
+		if (props.isAuthorizationRequired) return <SignIn onSubmit={props.login}/>;
 
     if(screen < 0) {
 
@@ -66,16 +69,20 @@ App.propTypes = {
   hotels: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
   cityClick: PropTypes.func.isRequired,
+	login: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
   hotels: state.hotels,
+	isAuthorizationRequired: state.isAuthorizationRequired,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 
-	cityClick: (city) => dispatch(ActionCreator.setCity(city))
+	cityClick: (city) => dispatch(ActionCreator.setCity(city)),
+
+	login: (authData) => dispatch(ActionCreator.login(authData))
 });
 
 export {App};
