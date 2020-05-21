@@ -96,6 +96,8 @@ class Main extends React.Component {
 					return 0;
 				});
 				break;
+
+			default: return null;
 		}
 
 		this.setState({offers});
@@ -103,7 +105,7 @@ class Main extends React.Component {
 
 	render() {
 
-		const {hotels, city} = this.props;
+		const {hotels, city, currentUser} = this.props;
 		const index = getIndex(hotels, city);
 		const offers = hotels[index].offers;
 		const cityCoord = hotels[index].coords;
@@ -124,7 +126,11 @@ class Main extends React.Component {
 										<button className="header__nav-link header__nav-link--profile buttonLink">
 											<div className="header__avatar-wrapper user__avatar-wrapper">
 											</div>
-											<span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+
+											{currentUser ? <span className="header__user-name user__name">{currentUser.userName}</span>
+												: <span className="header__login">Sign in</span>
+											}
+
 										</button>
 									</li>
 								</ul>
@@ -190,7 +196,7 @@ class Main extends React.Component {
 Main.propTypes = {
 	hotels: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
-	// cityOffers: PropTypes.array.isRequired,
+	currentUser: PropTypes.object,
 	onClick: PropTypes.func.isRequired,
 	onCityClick: PropTypes.func.isRequired
 };

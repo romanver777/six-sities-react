@@ -80,11 +80,11 @@ class SignIn extends React.PureComponent {
 							<nav className="header__nav">
 								<ul className="header__nav-list">
 									<li className="header__nav-item user">
-										<a className="header__nav-link header__nav-link--profile" href="#">
+										<button className="header__nav-link header__nav-link--profile buttonLink">
 											<div className="header__avatar-wrapper user__avatar-wrapper">
 											</div>
 											<span className="header__login">Sign in</span>
-										</a>
+										</button>
 									</li>
 								</ul>
 							</nav>
@@ -135,9 +135,9 @@ class SignIn extends React.PureComponent {
 						</section>
 						<section className="locations locations--login locations--current">
 							<div className="locations__item">
-								<a className="locations__item-link" href="#">
+								<button className="locations__item-link buttonLink">
 									<span>Amsterdam</span>
-								</a>
+								</button>
 							</div>
 						</section>
 					</div>

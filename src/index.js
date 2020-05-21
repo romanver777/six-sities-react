@@ -13,7 +13,7 @@ import createAPI from './api';
 const init = () => {
 
 	const onUnauthorized = () => {
-		store.dispatch(ActionCreator.requireAuthorization(false));
+		store.dispatch(ActionCreator.requireAuthorization(true));
 	};
 
 	const api = createAPI(onUnauthorized);
