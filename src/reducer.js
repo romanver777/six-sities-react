@@ -76,7 +76,7 @@ const Operation = {
 
 	checkAuth: () => (dispatch, getState, api) => {
 
-		return api.get(`https://es31-server.appspot.com/six-cities/login`)
+		return api.get(`http://www.mocky.io/v2/5ec6a1d23200007900d75032`)
 			.then(() => {
 				dispatch(ActionCreator.requireAuthorization(true));
 			});
@@ -91,6 +91,20 @@ const Operation = {
 			.then((response) => {
 				dispatch(ActionCreator.requireAuthorization(false));
 				dispatch(ActionCreator.setCurrentUser(response.data));
+			});
+	},
+
+	sendFormReview: (formData, city, hotel, user) => (dispatch, getState, api) => {
+
+		return api.post(`http://www.mocky.io/v2/5ec6d8392f00003500426e1f`, {
+			city,
+			hotel,
+			user,
+			rating: formData.rating,
+			review: formData.review,
+		})
+			.then(() => {
+				dispatch(Operation.loadHotels());
 			});
 	},
 };
