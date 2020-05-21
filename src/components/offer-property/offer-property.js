@@ -61,7 +61,7 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {hotels, cityOffers, city} = this.props;
+		const {hotels, cityOffers, city, currentUser} = this.props;
 		const {offer} = this.state;
 
 		const numberNhoods = 3;
@@ -86,7 +86,11 @@ class OfferProperty extends React.PureComponent{
 										<button className="header__nav-link header__nav-link--profile buttonLink">
 											<div className="header__avatar-wrapper user__avatar-wrapper">
 											</div>
-											<span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+
+											{currentUser ? <span className="header__user-name user__name">{currentUser.userName}</span>
+												: <span className="header__login">Sign in</span>
+											}
+
 										</button>
 									</li>
 								</ul>
@@ -307,6 +311,7 @@ OfferProperty.propTypes = {
 	city: PropTypes.string.isRequired,
 	cityOffer: PropTypes.object.isRequired,
 	cityOffers: PropTypes.array.isRequired,
+	currentUser: PropTypes.object,
 	onCLick: PropTypes.func.isRequired,
 };
 

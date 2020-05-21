@@ -2,12 +2,14 @@ const initialState = {
 	city: `Paris`,
 	hotels: [],
 	isAuthorizationRequired: true,
+	currentUser: {},
 };
 
 const ActionType = {
 	SET_CITY: `SET_CITY`,
 	LOAD_HOTELS: `LOAD_HOTELS`,
 	REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
+	SET_CURRENT_USER: `SET_CURRENT_USER`,
 };
 
 const ActionCreator = {
@@ -25,6 +27,11 @@ const ActionCreator = {
 	requireAuthorization: (status) => ({
 		type: ActionType.REQUIRE_AUTHORIZATION,
 		payload: status,
+	}),
+
+	setCurrentUser: (dataUser) => ({
+		type: ActionType.SET_CURRENT_USER,
+		payload: dataUser
 	}),
 };
 
@@ -47,9 +54,14 @@ const reducer = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				isAuthorizationRequired: action.payload,
 			});
-	}
 
-	return state;
+		case ActionType.SET_CURRENT_USER:
+			return Object.assign({}, state, {
+				currentUser: action.payload,
+			});
+
+		default: return state;
+	}
 };
 
 const Operation = {
@@ -67,20 +79,18 @@ const Operation = {
 		return api.get(`https://es31-server.appspot.com/six-cities/login`)
 			.then(() => {
 				dispatch(ActionCreator.requireAuthorization(true));
-			})
-			.catch((error) => {
-				throw error;
 			});
 	},
 
 	login: (authData) => (dispatch, getState, api) => {
 
-		return api.post(`https://es31-server.appspot.com/six-cities/login`, {
-			email: authData.login,
+		return api.post(`http://www.mocky.io/v2/5ec68ea13200007900d74f59`, {
+			login: authData.login,
 			password: authData.password,
 		})
-			.then(() => {
+			.then((response) => {
 				dispatch(ActionCreator.requireAuthorization(false));
+				dispatch(ActionCreator.setCurrentUser(response.data));
 			});
 	},
 };

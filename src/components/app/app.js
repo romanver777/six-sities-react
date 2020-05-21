@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {ActionCreator} from '../../reducer';
+import {ActionCreator, Operation} from '../../reducer';
 import {getIndex} from '../../helpers/helpers';
 
 import Main from '../main/main';
@@ -40,6 +40,7 @@ class App extends React.PureComponent {
         hotels={props.hotels}
         city={props.city}
         cityOffers={cityOffers}
+				currentUser={props.currentUser}
         onClick={onClick}
         onCityClick={props.cityClick}
       />
@@ -51,6 +52,7 @@ class App extends React.PureComponent {
                           city={props.city}
                           cityOffer={cityOffer}
                           cityOffers={cityOffers}
+													currentUser={props.currentUser}
                           onCLick={onClick}
     />
   };
@@ -69,6 +71,8 @@ App.propTypes = {
   hotels: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
   cityClick: PropTypes.func.isRequired,
+	isAuthorizationRequires: PropTypes.bool,
+	currentUser: PropTypes.object,
 	login: PropTypes.func,
 };
 
@@ -76,13 +80,14 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
   hotels: state.hotels,
 	isAuthorizationRequired: state.isAuthorizationRequired,
+	currentUser: state.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 
 	cityClick: (city) => dispatch(ActionCreator.setCity(city)),
 
-	login: (authData) => dispatch(ActionCreator.login(authData))
+	login: (authData) => dispatch(Operation.login(authData))
 });
 
 export {App};
