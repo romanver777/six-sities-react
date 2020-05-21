@@ -18,6 +18,7 @@ class App extends React.PureComponent {
       screen: -1,
 			isHotelsLoaded: false,
     }
+
   }
 
   componentDidUpdate(prevProps) {
@@ -32,7 +33,7 @@ class App extends React.PureComponent {
 
 		const cityOffers = props.hotels[getIndex(props.hotels, props.city)].offers;
 
-		if (props.isAuthorizationRequired) return <SignIn onSubmit={props.login}/>;
+		if (!props.isAuthorizationRequired) return <SignIn onSubmit={props.login}/>;
 
     if(screen < 0) {
 
@@ -41,6 +42,7 @@ class App extends React.PureComponent {
         city={props.city}
         cityOffers={cityOffers}
 				currentUser={props.currentUser}
+				isAuthorizationRequired={props.isAuthorizationRequired}
         onClick={onClick}
         onCityClick={props.cityClick}
       />
@@ -52,8 +54,10 @@ class App extends React.PureComponent {
                           city={props.city}
                           cityOffer={cityOffer}
                           cityOffers={cityOffers}
+													isAuthorizationRequired={props.isAuthorizationRequired}
 													currentUser={props.currentUser}
                           onCLick={onClick}
+													sendFormReview={props.sendFormReview}
     />
   };
 
@@ -74,6 +78,7 @@ App.propTypes = {
 	isAuthorizationRequires: PropTypes.bool,
 	currentUser: PropTypes.object,
 	login: PropTypes.func,
+	sendFormReview: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
@@ -87,7 +92,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 	cityClick: (city) => dispatch(ActionCreator.setCity(city)),
 
-	login: (authData) => dispatch(Operation.login(authData))
+	login: (authData) => dispatch(Operation.login(authData)),
+
+	sendFormReview: (formData, city, hotel, user) => dispatch(Operation.sendFormReview(formData, city, hotel, user))
 });
 
 export {App};

@@ -15,7 +15,7 @@ class SignIn extends React.PureComponent {
 		}
 	}
 
-	submitHandler = (e) => {
+	handleSubmit = (e) => {
 
 		const {onSubmit} = this.props;
 
@@ -32,13 +32,15 @@ class SignIn extends React.PureComponent {
 
 		let emailValid = this.state.emailValid;
 		let passwordValid = this.state.passwordValid;
+		const minPassLength = 6;
+		const maxPassLength = 12;
 
 		switch (name) {
 
 			case `email`: emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 				break;
 
-			case `password`: passwordValid = value.length > 5;
+			case `password`: passwordValid = value.length >= minPassLength && value.length <= maxPassLength;
 				break;
 
 			default:
@@ -57,7 +59,7 @@ class SignIn extends React.PureComponent {
 		});
 	};
 
-	changeHandler = (e) => {
+	handleChange = (e) => {
 
 		const value = e.target.value;
 		const name = e.target.name;
@@ -99,7 +101,7 @@ class SignIn extends React.PureComponent {
 							<form className="login__form form"
 										action="#"
 										method="post"
-										onSubmit={this.submitHandler}
+										onSubmit={this.handleSubmit}
 							>
 								<div className="login__input-wrapper form__input-wrapper">
 									<label className="visually-hidden">E-mail</label>
@@ -108,9 +110,8 @@ class SignIn extends React.PureComponent {
 												 name="email"
 												 placeholder="Email"
 												 required=""
-												 ref={this.loginRef}
 												 value={this.state.email}
-												 onChange={this.changeHandler}
+												 onChange={this.handleChange}
 									/>
 								</div>
 								<div className="login__input-wrapper form__input-wrapper">
@@ -120,9 +121,8 @@ class SignIn extends React.PureComponent {
 												 name="password"
 												 placeholder="Password"
 												 required=""
-												 ref={this.passwordRef}
 												 value={this.state.password}
-												 onChange={this.changeHandler}
+												 onChange={this.handleChange}
 									/>
 								</div>
 								<button className="login__submit form__submit button"

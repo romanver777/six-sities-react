@@ -105,7 +105,7 @@ class Main extends React.Component {
 
 	render() {
 
-		const {hotels, city, currentUser} = this.props;
+		const {hotels, city, currentUser, isAuthorizationRequired} = this.props;
 		const index = getIndex(hotels, city);
 		const offers = hotels[index].offers;
 		const cityCoord = hotels[index].coords;
@@ -127,7 +127,8 @@ class Main extends React.Component {
 											<div className="header__avatar-wrapper user__avatar-wrapper">
 											</div>
 
-											{currentUser ? <span className="header__user-name user__name">{currentUser.userName}</span>
+											{!isAuthorizationRequired
+												? <span className="header__user-name user__name">{currentUser.userName}</span>
 												: <span className="header__login">Sign in</span>
 											}
 
@@ -197,6 +198,7 @@ Main.propTypes = {
 	hotels: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
 	currentUser: PropTypes.object,
+	isAuthorizationRequired: PropTypes.bool,
 	onClick: PropTypes.func.isRequired,
 	onCityClick: PropTypes.func.isRequired
 };
