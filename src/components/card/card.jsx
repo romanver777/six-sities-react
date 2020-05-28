@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const Card = (props) => {
 
-  const {item} = props;
+  const {item, city} = props;
 
 	const handleClick = (e) => props.onClick(e);
 	const handleMouseOver = (e) => props.onMouseOver(e);
@@ -24,9 +25,9 @@ const Card = (props) => {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <button className="buttonLink">
-          <img className="place-card__image" src={item.img} width="260" height="200" alt="Place"/>
-        </button>
+        <Link to={`/${city.toLowerCase()}/offer/${item.id}`} className="buttonLink">
+          <img className="place-card__image" src={`/` + item.img} width="260" height="200" alt="Place"/>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -48,7 +49,7 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <button className="card__title buttonLink">{item.title}</button>
+          <Link to={`/${city.toLowerCase()}/offer/${item.id}`} className="card__title buttonLink">{item.title}</Link>
         </h2>
         <p className="place-card__type">{item.type}</p>
       </div>

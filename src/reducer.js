@@ -1,6 +1,7 @@
 const initialState = {
 	city: `Paris`,
 	hotels: [],
+	currentOffer: {},
 	isAuthorizationRequired: true,
 	currentUser: {},
 };
@@ -8,8 +9,10 @@ const initialState = {
 const ActionType = {
 	SET_CITY: `SET_CITY`,
 	LOAD_HOTELS: `LOAD_HOTELS`,
+	SET_CURRENT_OFFER: `SET_CURRENT_OFFER`,
 	REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
 	SET_CURRENT_USER: `SET_CURRENT_USER`,
+	RELOAD_ALL: `RELOAD_ALL`,
 };
 
 const ActionCreator = {
@@ -24,6 +27,11 @@ const ActionCreator = {
 		payload: hotels,
 	}),
 
+	setCurrentOffer: (currentOffer) => ({
+		type: ActionType.SET_CURRENT_OFFER,
+		payload: currentOffer,
+	}),
+
 	requireAuthorization: (status) => ({
 		type: ActionType.REQUIRE_AUTHORIZATION,
 		payload: status,
@@ -31,7 +39,12 @@ const ActionCreator = {
 
 	setCurrentUser: (dataUser) => ({
 		type: ActionType.SET_CURRENT_USER,
-		payload: dataUser
+		payload: dataUser,
+	}),
+
+	reloadAll: () => ({
+		type: ActionType.RELOAD_ALL,
+		payload: null,
 	}),
 };
 
@@ -50,6 +63,11 @@ const reducer = (state = initialState, action) => {
 				hotels: action.payload,
 			});
 
+		case ActionType.SET_CURRENT_OFFER:
+			return Object.assign({}, state, {
+				currentOffer: action.payload,
+			});
+
 		case ActionType.REQUIRE_AUTHORIZATION:
 			return Object.assign({}, state, {
 				isAuthorizationRequired: action.payload,
@@ -59,6 +77,9 @@ const reducer = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				currentUser: action.payload,
 			});
+
+		case ActionType.RELOAD:
+			return Object.assign({}, state);
 
 		default: return state;
 	}
@@ -74,39 +95,54 @@ const Operation = {
 			});
 	},
 
+	reloadAll: () => (dispatch) => {
+
+		dispatch(Operation.loadHotels())
+			.then(() => {
+				dispatch(ActionCreator.setCity('Paris'));
+			});
+
+
+		return null;
+
+	},
+
 	checkAuth: () => (dispatch, getState, api) => {
 
-		return api.get(`http://www.mocky.io/v2/5ec6a1d23200007900d75032`)
-			.then(() => {
-				dispatch(ActionCreator.requireAuthorization(true));
-			});
+		return api
+			.get(`/login`)
+			.then((response) => {
+				if (response.data) {
+					dispatch(ActionCreator.setCurrentUser(response.data));
+					dispatch(ActionCreator.requireAuthorization(false));
+				}
+			})
+			.catch(() => {});
 	},
 
 	login: (authData) => (dispatch, getState, api) => {
 
-		return api.post(`http://www.mocky.io/v2/5ec68ea13200007900d74f59`, {
-			login: authData.login,
-			password: authData.password,
-		})
+		return api.post(`/login`, authData)
 			.then((response) => {
-				dispatch(ActionCreator.requireAuthorization(false));
-				dispatch(ActionCreator.setCurrentUser(response.data));
-			});
+				if (response.data) {
+					dispatch(ActionCreator.setCurrentUser(response.data));
+					dispatch(ActionCreator.requireAuthorization(false));
+				}
+			})
+			.then(() => window.history.back())
+			.catch(() => {});
 	},
 
-	sendFormReview: (formData, city, hotel, user) => (dispatch, getState, api) => {
-
-		return api.post(`http://www.mocky.io/v2/5ec6d8392f00003500426e1f`, {
-			city,
-			hotel,
-			user,
-			rating: formData.rating,
-			review: formData.review,
-		})
-			.then(() => {
-				dispatch(Operation.loadHotels());
-			});
-	},
+	// sendFormReview: (formData, city, hotel, user) => (dispatch, getState, api) => {
+	//
+	// 	return api.post(`http://www.mocky.io/v2/5ec6d8392f00003500426e1f`, {
+	// 		city,
+	// 		hotel,
+	// 		user,
+	// 		rating: formData.rating,
+	// 		review: formData.review,
+	// 	});
+	// },
 };
 export {
 	ActionCreator,

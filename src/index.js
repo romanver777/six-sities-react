@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import thunk from 'redux-thunk';
 import {compose} from 'recompose';
+import {BrowserRouter} from 'react-router-dom';
 
 import App from './components/app/app';
 import {reducer, Operation, ActionCreator} from './reducer';
@@ -32,7 +33,9 @@ const init = () => {
 
   ReactDom.render(
     <Provider store={store}>
-      <App/>
+			<BrowserRouter>
+				<App/>
+			</BrowserRouter>
     </Provider>,
     document.getElementById(`root`)
   );

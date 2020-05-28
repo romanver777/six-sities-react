@@ -4,13 +4,14 @@ import CardList from '../card-list/card-list';
 
 const NeighbourhoodList = (props) => {
 
-	const {items} = props;
+	const {items, city} = props;
 
 	const handleClick = (item) => props.onClick(item);
 	const handleMouseOver = (item) => props.onMouseOver(item);
 	const handleMouseLeave = (e) => props.onMouseLeave(e);
 
 	return <CardList
+		city={city}
 		items={items}
 		onClick={handleClick}
 		onMouseOver={handleMouseOver}

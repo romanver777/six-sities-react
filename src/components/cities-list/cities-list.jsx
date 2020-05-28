@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const CitiesList = (props) => {
 
@@ -18,14 +19,14 @@ const CitiesList = (props) => {
 								<li className="locations__item"
 										key={i}
 								>
-									<button className={ (it.city === city) ? `locations__item-link tabs__item buttonLink tabs__item--active`
-																				: `locations__item-link tabs__item buttonLink`}
-													style={{color: '#000', backgroundColor: '#f5f5f5'}}
-													onClick={() => onClick(it.city)}
-													key={i}
-									>
+									<Link to="/" className={ (it.city === city) ? `locations__item-link tabs__item buttonLink tabs__item--active`
+																					: `locations__item-link tabs__item buttonLink`}
+														style={{color: '#000', backgroundColor: '#f5f5f5'}}
+														onClick={() => onClick(it.city)}
+														key={i}
+										>
 										<span>{it.city}</span>
-									</button>
+									</Link>
 								</li>
 							);
 						})}
