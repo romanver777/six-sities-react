@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import leaflet from 'leaflet';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import ReviewList from '../review-list/review-list';
 import Map from '../map/map';
 import NeghbourhoodList from '../neighbourhood-list/neughbourhood-list';
 import FormComments from '../form-comments/form-comments';
 
-import {getIndex} from '../../helpers/helpers';
+import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
+import {NUMBER_NEIBOURHOODS} from '../../const';
 
 class OfferProperty extends React.PureComponent{
 
@@ -15,9 +17,16 @@ class OfferProperty extends React.PureComponent{
 		super (props);
 
 		this.state = {
-			neighbourhoods: [],
 			hoverItem: null,
 			offer: this.props.cityOffer
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+
+		if(prevProps.cityOffer !== this.props.cityOffer) {
+
+			window.scrollTo(0,0);
 		}
 	}
 
@@ -30,49 +39,15 @@ class OfferProperty extends React.PureComponent{
 
 	handleMouseLeave = () => this.setState({hoverItem: null});
 
-	getNhoods = (offer, items, number) => {
-
-		let arr = [];
-		const from = leaflet.latLng(offer.coords);
-
-		arr.push({
-			offer: offer,
-			length: 0
-		});
-
-		for (const it of items) {
-
-			if (it.id !== offer.id) {
-
-				let to = leaflet.latLng(it.coords);
-
-				arr.push({
-					offer: it,
-					length: from.distanceTo(to)
-				});
-			}
-		}
-		arr = arr.sort((prev, next) => prev.length - next.length);
-
-		for (let i = 0; i < arr.length; i++) {
-			arr[i] = arr[i].offer;
-		}
-
-		return arr.slice(1, number + 1);
-	};
-
-	submitReviewForm = (formData) => this.props.sendFormReview(formData, this.props.city, this.state.offer, this.props.currentUser);
-
 	render () {
 
 		const {hotels, cityOffers, city, currentUser, isAuthorizationRequired} = this.props;
 		const {offer} = this.state;
 
-		const numberNhoods = 3;
-		const neighbourhoods = this.getNhoods(offer, cityOffers, numberNhoods);
+		if (!offer) return null;
 
-		const index = getIndex(hotels, city);
-		const cityCoord = hotels[index].coords;
+		const neighbourhoods = getNhoods(offer, cityOffers, NUMBER_NEIBOURHOODS);
+		const cityCoord = getCityCoord(hotels, city);
 
 		return (
 			<div className="page">
@@ -80,9 +55,9 @@ class OfferProperty extends React.PureComponent{
 					<div className="container">
 						<div className="header__wrapper">
 							<div className="header__left">
-								<button className="header__logo-link buttonLink">
-									<img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-								</button>
+								<Link to="/" className="header__logo-link buttonLink">
+									<img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+								</Link>
 							</div>
 							<nav className="header__nav">
 								<ul className="header__nav-list">
@@ -92,8 +67,12 @@ class OfferProperty extends React.PureComponent{
 											</div>
 
 											{!isAuthorizationRequired
-												? <span className="header__user-name user__name">{currentUser.userName}</span>
-												: <span className="header__login">Sign in</span>
+												? <span className="header__user-name user__name">
+													<Link to="/favorites">{currentUser.name}</Link>
+													</span>
+												: <span className="header__login">
+														<Link to="/login">Sign in</Link>
+													</span>
 											}
 
 										</button>
@@ -108,22 +87,22 @@ class OfferProperty extends React.PureComponent{
 						<div className="property__gallery-container container">
 							<div className="property__gallery">
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/room.jpg" alt="studio"/>
+									<img className="property__image" src="/img/room.jpg" alt="studio"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-01.jpg" alt="studio01"/>
+									<img className="property__image" src="/img/apartment-01.jpg" alt="studio01"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-02.jpg" alt="studio02"/>
+									<img className="property__image" src="/img/apartment-02.jpg" alt="studio02"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-03.jpg" alt="studio03"/>
+									<img className="property__image" src="/img/apartment-03.jpg" alt="studio03"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/studio-01.jpg" alt="studio04"/>
+									<img className="property__image" src="/img/studio-01.jpg" alt="studio04"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="img/apartment-01.jpg" alt="studio05"/>
+									<img className="property__image" src="/img/apartment-01.jpg" alt="studio05"/>
 								</div>
 							</div>
 						</div>
@@ -204,7 +183,7 @@ class OfferProperty extends React.PureComponent{
 									<h2 className="property__host-title">Meet the host</h2>
 									<div className="property__host-user user">
 										<div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-											<img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74"
+											<img className="property__avatar user__avatar" src="/img/avatar-angelina.jpg" width="74"
 													 height="74" alt="Host avatar"/>
 										</div>
 										<span className="property__user-name">
@@ -231,7 +210,7 @@ class OfferProperty extends React.PureComponent{
 
 									<ReviewList reviews={offer.reviews}/>
 
-									{isAuthorizationRequired
+									{!isAuthorizationRequired
 										? <FormComments
 												onSubmit={this.submitReviewForm}
 										/>
@@ -242,10 +221,11 @@ class OfferProperty extends React.PureComponent{
 						</div>
 						<section className="property_map map" style={{height: 579 + 'px', marginBottom: 50 + 'px'}}>
 
-							<Map coords={cityCoord}
-									 items={neighbourhoods}
-									 offerHover={this.state.hoverItem}
-									 offer={offer}
+							<Map
+								coords={cityCoord}
+								items={neighbourhoods}
+								offerHover={this.state.hoverItem}
+								offer={offer}
 							/>
 
 						</section>
@@ -256,6 +236,7 @@ class OfferProperty extends React.PureComponent{
 							<div className="near-places__list places__list">
 
 								<NeghbourhoodList
+									city={city}
 									items={neighbourhoods}
 									onClick={this.handleClick}
 									onMouseOver={this.handleMouseOver}
@@ -278,8 +259,28 @@ OfferProperty.propTypes = {
 	cityOffers: PropTypes.array.isRequired,
 	currentUser: PropTypes.object,
 	isAuthorizationRequired: PropTypes.bool,
-	onCLick: PropTypes.func.isRequired,
-	sendFormReview: PropTypes.func.isRequired,
 };
 
-export default OfferProperty;
+const mapStateToProps = (state, ownProps) => {
+
+	const {id} = ownProps.match.params;
+	const {city} = ownProps.match.params;
+
+	return Object.assign({}, ownProps, {
+		id,
+		city,
+		hotels: state.hotels,
+		cityOffer: getCityOffer(state, id, city),
+		cityOffers: getCityOffers(state, city),
+		isAuthorizationRequired: state.isAuthorizationRequired,
+		currentUser: state.currentUser,
+	});
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+
+});
+
+export {OfferProperty}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OfferProperty);

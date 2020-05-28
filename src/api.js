@@ -3,7 +3,7 @@ import axios from 'axios';
 const createAPI = (onUnauthorized) => {
 
 	const api = axios.create({
-		baseUrl: ``,
+		baseURL: `https://es31-server.appspot.com/six-cities`,
 		timeout: 1000 * 5,
 		withCredentials: true,
 	});
@@ -12,7 +12,7 @@ const createAPI = (onUnauthorized) => {
 
 	const onFail = (error) => {
 
-		if (error.response.status === 401) {
+		if (error.response.status === 403) {
 
 			onUnauthorized();
 		}

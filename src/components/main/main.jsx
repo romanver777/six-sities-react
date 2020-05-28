@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import SortingType from '../sorting-type/sorting-type';
 import CardList from '../card-list/card-list';
@@ -17,10 +18,6 @@ class Main extends React.Component {
 			hoverItem: null,
 			offers: [],
 		};
-	}
-
-	componentDidMount() {
-		// this.setState({offers: this.props.cityOffers});
 	}
 
 	componentDidUpdate(prevProps) {
@@ -105,7 +102,7 @@ class Main extends React.Component {
 
 	render() {
 
-		const {hotels, city, currentUser, isAuthorizationRequired} = this.props;
+		const {hotels, city, currentUser, isAuthorizationRequired, reload} = this.props;
 		const index = getIndex(hotels, city);
 		const offers = hotels[index].offers;
 		const cityCoord = hotels[index].coords;
@@ -116,9 +113,11 @@ class Main extends React.Component {
 					<div className="container">
 						<div className="header__wrapper">
 							<div className="header__left">
-								<button className="header__logo-link header__logo-link--active buttonLink">
-									<img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-								</button>
+								<Link to="/" className="header__logo-link header__logo-link--active buttonLink"
+									onClick={reload}
+								>
+										<img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+								</Link>
 							</div>
 							<nav className="header__nav">
 								<ul className="header__nav-list">
@@ -128,8 +127,10 @@ class Main extends React.Component {
 											</div>
 
 											{!isAuthorizationRequired
-												? <span className="header__user-name user__name">{currentUser.userName}</span>
-												: <span className="header__login">Sign in</span>
+												? <span className="header__user-name user__name">{currentUser.name}</span>
+												: <span className="header__login">
+														<Link to="/login">Sign in</Link>
+													</span>
 											}
 
 										</button>
@@ -164,6 +165,7 @@ class Main extends React.Component {
 									<div className="cities__places-list places__list tabs__content">
 
 										<CardList
+											city={city}
 											items={offers}
 											onClick={this.handleClick}
 											onMouseOver={this.handleMouseOver}
@@ -199,7 +201,7 @@ Main.propTypes = {
 	city: PropTypes.string.isRequired,
 	currentUser: PropTypes.object,
 	isAuthorizationRequired: PropTypes.bool,
-	onClick: PropTypes.func.isRequired,
+	onOfferClick: PropTypes.func,
 	onCityClick: PropTypes.func.isRequired
 };
 

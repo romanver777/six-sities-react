@@ -19,13 +19,14 @@ class CardList extends React.Component {
 	handleMouseLeave = (e) => this.props.onMouseLeave(e);
 
 	render() {
-		const {items} = this.props;
+		const {items, city} = this.props;
 
 		return (
 
 			items.map((item) => {
 
 				return <Card
+					city={city}
 					item={item}
 					key={item.id}
 					onClick={this.handleClick}
@@ -38,6 +39,7 @@ class CardList extends React.Component {
 }
 
 CardList.propTypes = {
+	city: PropTypes.string.isRequired,
 	items: PropTypes.array.isRequired,
 	onClick: PropTypes.func,
 	onMouseOver: PropTypes.func,
