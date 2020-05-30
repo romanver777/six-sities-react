@@ -2,8 +2,16 @@ const initialState = {
 	city: `Paris`,
 	hotels: [],
 	currentOffer: {},
+	favoriteList: [],
 	isAuthorizationRequired: true,
 	currentUser: {},
+};
+
+const getFavoriteIndexFromList = (offer, favoriteList) => {
+
+	if (!favoriteList.length) return -1;
+
+	return favoriteList.findIndex((item) => item.id === offer.id);
 };
 
 const ActionType = {
@@ -13,6 +21,9 @@ const ActionType = {
 	REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
 	SET_CURRENT_USER: `SET_CURRENT_USER`,
 	RELOAD_ALL: `RELOAD_ALL`,
+	TOGGLE_FAVORITE: `TOGGLE_FAVORITE`,
+	ADD_FAVORITE: `ADD_FAVORITE`,
+	REMOVE_FAVORITE: `REMOVE_FAVORITE`,
 };
 
 const ActionCreator = {
@@ -46,6 +57,22 @@ const ActionCreator = {
 		type: ActionType.RELOAD_ALL,
 		payload: null,
 	}),
+
+	toggleFavorite: (offer, favoriteList) => {
+
+		const offerInd = getFavoriteIndexFromList(offer, favoriteList);
+
+		if (offerInd < 0) {
+			return {
+				type: `ADD_FAVORITE`,
+				payload: offer,
+			}
+		}
+		return {
+			type: `REMOVE_FAVORITE`,
+			payload: offerInd,
+		}
+	},
 };
 
 
@@ -78,8 +105,22 @@ const reducer = (state = initialState, action) => {
 				currentUser: action.payload,
 			});
 
-		case ActionType.RELOAD:
+		case ActionType.RELOAD_ALL:
 			return Object.assign({}, state);
+
+		case ActionType.ADD_FAVORITE:
+			return Object.assign({}, state, {
+				favoriteList: [...state.favoriteList, action.payload],
+			});
+
+		case ActionType.REMOVE_FAVORITE:
+
+			let list = [...state.favoriteList];
+			list.splice(action.payload, 1);
+
+			return Object.assign({}, state, {
+				favoriteList: list,
+			});
 
 		default: return state;
 	}
@@ -102,9 +143,7 @@ const Operation = {
 				dispatch(ActionCreator.setCity('Paris'));
 			});
 
-
 		return null;
-
 	},
 
 	checkAuth: () => (dispatch, getState, api) => {
