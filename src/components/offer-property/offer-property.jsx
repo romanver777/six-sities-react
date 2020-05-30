@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {ActionCreator} from '../../reducer';
 
 import ReviewList from '../review-list/review-list';
 import Map from '../map/map';
@@ -39,6 +40,29 @@ class OfferProperty extends React.PureComponent{
 	});
 
 	handleMouseLeave = () => this.setState({hoverItem: null});
+
+	isFavorite = () => {
+
+		const {cityOffer, favoriteList} = this.props;
+
+		if (!favoriteList.length) return false;
+
+		return favoriteList.findIndex((item) => item.id === cityOffer.id) >= 0;
+	};
+
+	handleBookmarkClick = () => {
+
+		const {isAuthorizationRequired, cityOffer, toggleBookmark, favoriteList} = this.props;
+
+		if (isAuthorizationRequired) {
+
+			window.location.assign('/login');
+
+		} else{
+
+			toggleBookmark(cityOffer, favoriteList);
+		}
+	};
 
 	render () {
 
@@ -118,9 +142,8 @@ class OfferProperty extends React.PureComponent{
 									</h1>
 
 									<BookmarkButton
-										isFavorite={true}
-										onBookmarkClick={() => {console.log('bookmark click')}}
-										isAuthRequired={isAuthorizationRequired}
+										isActive={this.isFavorite()}
+										onBookmarkClick={this.handleBookmarkClick}
 									/>
 
 								</div>
@@ -274,13 +297,15 @@ const mapStateToProps = (state, ownProps) => {
 		hotels: state.hotels,
 		cityOffer: getCityOffer(state, id, city),
 		cityOffers: getCityOffers(state, city),
+		favoriteList: state.favoriteList,
 		isAuthorizationRequired: state.isAuthorizationRequired,
 		currentUser: state.currentUser,
 	});
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
 
+	toggleBookmark: (cityOffer, favoriteList) => dispatch(ActionCreator.toggleFavorite(cityOffer, favoriteList)),
 });
 
 export {OfferProperty}
