@@ -73,8 +73,7 @@ class SignIn extends React.PureComponent {
 	render() {
 
 		const {isAuthRequired, currentUser} = this.props;
-console.log('isAuthRequired',isAuthRequired);
-console.log('currentUser',currentUser);
+
 		return (
 			<div className="page page--gray page--login">
 				<header className="header">
@@ -93,7 +92,11 @@ console.log('currentUser',currentUser);
 										<button className="header__nav-link header__nav-link--profile buttonLink">
 											<div className="header__avatar-wrapper user__avatar-wrapper">
 											</div>
-											<span className="header__login">{!isAuthRequired ? currentUser.name : `Sign in`}</span>
+											<span className="header__login">
+												{!isAuthRequired
+													? <Link to="/favorites">${currentUser.name}</Link>
+													: `Sign in`}
+											</span>
 										</button>
 									</li>
 								</ul>

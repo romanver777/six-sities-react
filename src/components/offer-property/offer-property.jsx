@@ -9,6 +9,7 @@ import Map from '../map/map';
 import NeghbourhoodList from '../neighbourhood-list/neughbourhood-list';
 import FormComments from '../form-comments/form-comments';
 import BookmarkButton from '../bookmark-button/bookmark-button';
+import Favorites from '../favorites/favorites';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
 import {NUMBER_NEIBOURHOODS} from '../../const';
@@ -93,7 +94,7 @@ class OfferProperty extends React.PureComponent{
 
 											{!isAuthorizationRequired
 												? <span className="header__user-name user__name">
-													<Link to="/favorites">{currentUser.name}</Link>
+														<Link to="/favorites">{currentUser.name}</Link>
 													</span>
 												: <span className="header__login">
 														<Link to="/login">Sign in</Link>

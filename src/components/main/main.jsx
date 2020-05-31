@@ -127,7 +127,9 @@ class Main extends React.Component {
 											</div>
 
 											{!isAuthorizationRequired
-												? <span className="header__user-name user__name">{currentUser.name}</span>
+												? <span className="header__user-name user__name">
+														<Link to="/favorites">{currentUser.name}</Link>
+													</span>
 												: <span className="header__login">
 														<Link to="/login">Sign in</Link>
 													</span>
