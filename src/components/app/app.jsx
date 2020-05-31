@@ -11,6 +11,7 @@ import {APP_ROUTE} from '../../const';
 import Main from '../main/main';
 import OfferProperty from '../offer-property/offer-property';
 import SignIn from '../sign-in/sign-in';
+import Favorites from '../favorites/favorites';
 
 class App extends React.PureComponent {
 
@@ -44,7 +45,7 @@ class App extends React.PureComponent {
 
   render() {
 
-		const {hotels, city, currentUser, isAuthorizationRequired, cityClick, login} = this.props;
+		const {hotels, city, currentUser, isAuthorizationRequired, favoriteList, cityClick, login} = this.props;
 
 		let cityOffers;
 
@@ -74,10 +75,16 @@ class App extends React.PureComponent {
 									isAuthRequired={isAuthorizationRequired}
 								/>
 							</Route>
+								<Route exact path={APP_ROUTE.FAVORITES}>
+									<Favorites
+										favoriteList={favoriteList}
+										isAuthRequired={isAuthorizationRequired}
+										currentUser={currentUser}
+									/>
+							</Route>
 							<Route path={APP_ROUTE.OFFER}
 										 render={(props) => <OfferProperty {...props}/>}
 							>
-
 							</Route>
 						</Switch>
 					</Router>
@@ -99,6 +106,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   city: state.city,
   hotels: state.hotels,
 	currentOffer: state.currentOffer,
+	favoriteList: state.favoriteList,
 	isAuthorizationRequired: state.isAuthorizationRequired,
 	currentUser: state.currentUser,
 });
