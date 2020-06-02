@@ -5,7 +5,7 @@ import {Router, Switch, Route} from 'react-router-dom';
 import history from '../../history';
 
 import {ActionCreator, Operation} from '../../reducer';
-import {getIndex} from '../../helpers/helpers';
+import {getIndex, getLS, setLS} from '../../helpers/helpers';
 import {APP_ROUTE} from '../../const';
 
 import Main from '../main/main';
@@ -26,8 +26,33 @@ class App extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
 
-		if (prevProps.hotels !== this.props.hotels) {
+  	const {hotels, currentUser, favoriteList} = this.props;
+
+		if (prevProps.hotels !== hotels) {
 			this.setState({isHotelsLoaded: true});
+		}
+
+		if (currentUser && prevProps.favoriteList !== favoriteList) {
+
+			let userList = [];
+			let filtered;
+			const data = {currentUser, favoriteList};
+
+			let favoritesLocal = getLS('favorites');
+
+			if (favoritesLocal) {
+
+				filtered = favoritesLocal.filter((it) => it.currentUser.email !== currentUser.email);
+
+				filtered.push(data);
+				setLS('favorites', filtered);
+
+			} else {
+
+				userList.push(data);
+				setLS('favorites', userList);
+
+			}
 		}
   }
 
@@ -117,6 +142,8 @@ const mapDispatchToProps = (dispatch) => ({
 	cityClick: (city) => dispatch(ActionCreator.setCity(city)),
 	onClick: (offer) => dispatch(ActionCreator.setCurrentOffer(offer)),
 	login: (authData) => dispatch(Operation.login(authData)),
+	setFavorites: (favoritesList) => dispatch(ActionCreator.setFavorites(favoritesList)),
+	setCurrentUser: (currentUser) => dispatch(ActionCreator.setCurrentUser(currentUser)),
 });
 
 export {App};

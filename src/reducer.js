@@ -14,6 +14,17 @@ const getFavoriteIndexFromList = (offer, favoriteList) => {
 	return favoriteList.findIndex((item) => item.id === offer.id);
 };
 
+const getFilteredLocalList = (key, responseEmail) => {
+	let filtered;
+	let favoritesLocal = JSON.parse(localStorage.getItem(key));
+
+	if (favoritesLocal) {
+		filtered = favoritesLocal.filter((it) => it.currentUser.email === responseEmail);
+	}
+
+	return filtered;
+};
+
 const ActionType = {
 	SET_CITY: `SET_CITY`,
 	LOAD_HOTELS: `LOAD_HOTELS`,
@@ -24,6 +35,7 @@ const ActionType = {
 	TOGGLE_FAVORITE: `TOGGLE_FAVORITE`,
 	ADD_FAVORITE: `ADD_FAVORITE`,
 	REMOVE_FAVORITE: `REMOVE_FAVORITE`,
+	SET_FAVORITES: `SET_FAVORITES`,
 };
 
 const ActionCreator = {
@@ -73,6 +85,11 @@ const ActionCreator = {
 			payload: offerInd,
 		}
 	},
+
+	setFavorites: (favoriteList) => ({
+		type: `SET_FAVORITES`,
+		payload: favoriteList,
+	}),
 };
 
 
@@ -122,6 +139,11 @@ const reducer = (state = initialState, action) => {
 				favoriteList: list,
 			});
 
+		case ActionType.SET_FAVORITES:
+			return Object.assign({}, state, {
+				favoriteList: action.payload,
+			});
+
 		default: return state;
 	}
 };
@@ -154,6 +176,10 @@ const Operation = {
 				if (response.data) {
 					dispatch(ActionCreator.setCurrentUser(response.data));
 					dispatch(ActionCreator.requireAuthorization(false));
+
+					const filtered = getFilteredLocalList('favorites', response.data.email);
+
+					if (filtered) dispatch(ActionCreator.setFavorites(filtered[0].favoriteList));
 				}
 			})
 			.catch(() => {});
@@ -166,13 +192,18 @@ const Operation = {
 				if (response.data) {
 					dispatch(ActionCreator.setCurrentUser(response.data));
 					dispatch(ActionCreator.requireAuthorization(false));
+
+					const filtered = getFilteredLocalList('favorites', response.data.email);
+
+					if (filtered) dispatch(ActionCreator.setFavorites(filtered[0].favoriteList));
 				}
 			})
 			.then(() => window.history.back())
 			.catch(() => {});
 	},
 
-	// sendFormReview: (formData, city, hotel, user) => (dispatch, getState, api) => {
+
+		// sendFormReview: (formData, city, hotel, user) => (dispatch, getState, api) => {
 	//
 	// 	return api.post(`http://www.mocky.io/v2/5ec6d8392f00003500426e1f`, {
 	// 		city,

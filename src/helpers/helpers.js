@@ -69,3 +69,11 @@ export const getNhoods = (offer, items, number) => {
 
 	return arr.slice(1, number + 1);
 };
+
+export const getLS = (name) => {
+	return JSON.parse(localStorage.getItem(name));
+};
+
+export const setLS = (name, arr) => {
+	return localStorage.setItem(name, JSON.stringify(arr));
+};
