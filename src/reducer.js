@@ -11,7 +11,7 @@ const getFavoriteIndexFromList = (offer, favoriteList) => {
 
 	if (!favoriteList.length) return -1;
 
-	return favoriteList.findIndex((item) => item.id === offer.id);
+	return favoriteList.findIndex((item) => item.hotelId === offer.hotelId);
 };
 
 const getFilteredLocalList = (key, responseEmail) => {
@@ -152,7 +152,7 @@ const Operation = {
 
 	loadHotels: () => (dispatch, getState, api) => {
 
-		return api.get(`http://www.mocky.io/v2/5ec4f1df2f00009200dc2d00`)
+		return api.get(`http://www.mocky.io/v2/5ed64aad340000108a06d8e0`)
 			.then((response) => {
 				dispatch(ActionCreator.loadHotels(response.data));
 			});
