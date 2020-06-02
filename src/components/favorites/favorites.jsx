@@ -25,7 +25,7 @@ const Favorites = (props) => {
 										<span className="header__user-name user__name">
 											{!isAuthRequired
 												? <Link to="/favorites">{currentUser.name}</Link>
-												: `Sign in`}
+												: <Link to="/login">Sign in</Link>}
 										</span>
 									</button>
 								</li>
