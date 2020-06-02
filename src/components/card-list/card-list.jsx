@@ -19,16 +19,15 @@ class CardList extends React.Component {
 	handleMouseLeave = (e) => this.props.onMouseLeave(e);
 
 	render() {
-		const {items, city} = this.props;
+		const {items} = this.props;
 
 		return (
 
 			items.map((item) => {
 
 				return <Card
-					city={city}
 					item={item}
-					key={item.id}
+					key={item.hotelId}
 					onClick={this.handleClick}
 					onMouseOver={this.handleMouseOver}
 					onMouseLeave={this.handleMouseLeave}

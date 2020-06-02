@@ -48,7 +48,7 @@ class OfferProperty extends React.PureComponent{
 
 		if (!favoriteList.length) return false;
 
-		return favoriteList.findIndex((item) => item.id === cityOffer.id) >= 0;
+		return favoriteList.findIndex((item) => item.hotelId === cityOffer.hotelId) >= 0;
 	};
 
 	handleBookmarkClick = () => {
