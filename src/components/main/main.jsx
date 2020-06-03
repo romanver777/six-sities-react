@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../reducer';
 
 import SortingType from '../sorting-type/sorting-type';
 import CardList from '../card-list/card-list';
@@ -100,9 +102,23 @@ class Main extends React.Component {
 		this.setState({offers});
 	};
 
+	handleBookmarkClick = (item) => {
+
+		const {isAuthorizationRequired, toggleBookmark, favoriteList} = this.props;
+
+		if (isAuthorizationRequired) {
+
+			window.location.assign('/login');
+
+		} else{
+
+			toggleBookmark(item, favoriteList);
+		}
+	};
+
 	render() {
 
-		const {hotels, city, currentUser, isAuthorizationRequired, reload} = this.props;
+		const {hotels, city, currentUser, isAuthorizationRequired, reload, favoriteList} = this.props;
 		const index = getIndex(hotels, city);
 		const offers = hotels[index].offers;
 		const cityCoord = hotels[index].coords;
@@ -169,9 +185,11 @@ class Main extends React.Component {
 										<CardList
 											city={city}
 											items={offers}
+											favoriteList={favoriteList}
 											onClick={this.handleClick}
 											onMouseOver={this.handleMouseOver}
 											onMouseLeave={this.handleMouseLeave}
+											onBookmarkClick={this.handleBookmarkClick}
 										/>
 
 									</div>
@@ -201,10 +219,34 @@ class Main extends React.Component {
 Main.propTypes = {
 	hotels: PropTypes.array.isRequired,
 	city: PropTypes.string.isRequired,
+	favoriteList: PropTypes.array.isRequired,
 	currentUser: PropTypes.object,
 	isAuthorizationRequired: PropTypes.bool,
 	onOfferClick: PropTypes.func,
 	onCityClick: PropTypes.func.isRequired
 };
 
-export default Main;
+const mapStateToProps = (state, ownProps) => {
+
+	// const {id} = ownProps.match.params;
+	//
+	return Object.assign({}, ownProps, {
+	// 	id,
+	// 	city: getCityOffer(state, id).city,
+	// 	hotels: state.hotels,
+	// 	cityOffer: getCityOffer(state, id),
+	// 	cityOffers: getCityOffers(state, id),
+	// 	favoriteList: state.favoriteList,
+		// isAuthorizationRequired: state.isAuthorizationRequired,
+		// currentUser: state.currentUser,
+	});
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+	toggleBookmark: (cityOffer, favoriteList) => dispatch(ActionCreator.toggleFavorite(cityOffer, favoriteList)),
+});
+
+export {Main}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

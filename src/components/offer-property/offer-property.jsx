@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {ActionCreator} from '../../reducer';
+import {Link} from 'react-router-dom';
 
 import ReviewList from '../review-list/review-list';
 import Map from '../map/map';
 import NeghbourhoodList from '../neighbourhood-list/neughbourhood-list';
 import FormComments from '../form-comments/form-comments';
 import BookmarkButton from '../bookmark-button/bookmark-button';
-import Favorites from '../favorites/favorites';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
 import {NUMBER_NEIBOURHOODS} from '../../const';
@@ -145,6 +144,7 @@ class OfferProperty extends React.PureComponent{
 									<BookmarkButton
 										isActive={this.isFavorite()}
 										onBookmarkClick={this.handleBookmarkClick}
+										small={false}
 									/>
 
 								</div>
@@ -290,14 +290,13 @@ OfferProperty.propTypes = {
 const mapStateToProps = (state, ownProps) => {
 
 	const {id} = ownProps.match.params;
-	const {city} = ownProps.match.params;
 
 	return Object.assign({}, ownProps, {
 		id,
-		city,
+		city: getCityOffer(state, id).city,
 		hotels: state.hotels,
-		cityOffer: getCityOffer(state, id, city),
-		cityOffers: getCityOffers(state, city),
+		cityOffer: getCityOffer(state, id),
+		cityOffers: getCityOffers(state, id),
 		favoriteList: state.favoriteList,
 		isAuthorizationRequired: state.isAuthorizationRequired,
 		currentUser: state.currentUser,

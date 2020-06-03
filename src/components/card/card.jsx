@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import BookmarkButton from '../bookmark-button/bookmark-button';
+
 const Card = (props) => {
 
-  const {item} = props;
+  const {item, isFavorite} = props;
 
 	const handleClick = (e) => props.onClick(e);
 	const handleMouseOver = (e) => props.onMouseOver(e);
 	const handleMouseLeave = () => props.onMouseLeave();
+	const handleBookmarkClick = () => props.onBookmarkClick(props.item);
 
   return (
     <article className="cities__place-card place-card"
@@ -25,7 +28,7 @@ const Card = (props) => {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/${item.city.toLowerCase()}/offer/${item.id}`} className="buttonLink">
+        <Link to={`/offer/${item.hotelId}`} className="buttonLink">
           <img className="place-card__image" src={`/` + item.img} width="260" height="200" alt="Place"/>
         </Link>
       </div>
@@ -35,12 +38,13 @@ const Card = (props) => {
             <b className="place-card__price-value">&euro;{item.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;{item.priceText}</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"/>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+
+          <BookmarkButton
+            onBookmarkClick={handleBookmarkClick}
+            isActive={isFavorite}
+            small={true}
+          />
+
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -49,7 +53,7 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/${item.city.toLowerCase()}/offer/${item.id}`} className="card__title buttonLink">{item.title}</Link>
+          <Link to={`/offer/${item.hotelId}`} className="card__title buttonLink">{item.title}</Link>
         </h2>
         <p className="place-card__type">{item.type}</p>
       </div>
@@ -59,9 +63,10 @@ const Card = (props) => {
 
 Card.propTypes = {
   item: PropTypes.object.isRequired,
-  handleClick: PropTypes.func,
-  handleMouseOver: PropTypes.func,
-  handleMouseLeave: PropTypes.func,
+  onClick: PropTypes.func,
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+	onBookmarkClick: PropTypes.func,
 };
 
 export default Card;

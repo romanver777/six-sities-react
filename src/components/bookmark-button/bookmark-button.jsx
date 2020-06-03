@@ -1,20 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const size = {
+	default: {
+		prefix: `property`,
+		width: 31,
+		height: 33,
+	},
+	small: {
+		prefix: `place-card`,
+		width: 18,
+		height: 19,
+	}
+};
+
 const BookmarkButton = (props) => {
 
-	const {onBookmarkClick, isActive} = props;
+	const {onBookmarkClick, isActive, small} = props;
+
+	const prefix = small ? size.small.prefix : size.default.prefix;
+	const buttonClassActive = isActive ? `${prefix}__bookmark-button--active` : ``;
 
 	return (
-		<button className="property__bookmark-button button"
+		<button className={`${prefix}__bookmark-button ${buttonClassActive} button`}
 						type="button"
 						onClick={onBookmarkClick}
 		>
-			<svg className="property__bookmark-icon"
-					 width="31"
-					 height="33"
+			<svg className={`${prefix}__bookmark-icon`}
+
+					 width={small ? size.small.width : size.default.width}
+					 height={small ? size.small.height : size.default.height}
 					 style={isActive ? {fill: `#4481c3`, stroke: `#4481c3`} : {fill: `none`,
-						 stroke: `#b8b8b8`}}
+							 stroke: `#b8b8b8`}}
 			>
 				<use xlinkHref="#icon-bookmark"/>
 			</svg>
@@ -24,7 +41,7 @@ const BookmarkButton = (props) => {
 };
 
 BookmarkButton.propTypes = {
-	isActive: PropTypes.bool.isRequired,
+	isActive: PropTypes.bool,
 	onBookmarkClick: PropTypes.func,
 };
 
