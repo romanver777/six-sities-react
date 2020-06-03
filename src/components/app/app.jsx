@@ -100,12 +100,12 @@ class App extends React.PureComponent {
 									isAuthRequired={isAuthorizationRequired}
 								/>
 							</Route>
-								<Route exact path={APP_ROUTE.FAVORITES}>
-									<Favorites
-										favoriteList={favoriteList}
-										isAuthRequired={isAuthorizationRequired}
-										currentUser={currentUser}
-									/>
+							<Route exact path={APP_ROUTE.FAVORITES}>
+								<Favorites
+									favoriteList={favoriteList}
+									isAuthRequired={isAuthorizationRequired}
+									currentUser={currentUser}
+								/>
 							</Route>
 							<Route path={APP_ROUTE.OFFER}
 										 render={(props) => <OfferProperty {...props}/>}

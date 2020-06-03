@@ -17,9 +17,19 @@ class CardList extends React.Component {
 	handleClick = (item) => this.props.onClick(item);
 	handleMouseOver = (item) => this.props.onMouseOver(item);
 	handleMouseLeave = (e) => this.props.onMouseLeave(e);
+	handleBookmarkClick = (item) => this.props.onBookmarkClick(item);
+
+	isFavorite = (favoriteList, item) => {
+
+		if (favoriteList) {
+			let isFavorite = favoriteList.filter((it) => it.hotelId === item.hotelId);
+
+			return !!isFavorite.length;
+		}
+	};
 
 	render() {
-		const {items} = this.props;
+		const {items, favoriteList} = this.props;
 
 		return (
 
@@ -28,9 +38,11 @@ class CardList extends React.Component {
 				return <Card
 					item={item}
 					key={item.hotelId}
+					isFavorite={this.isFavorite(favoriteList, item)}
 					onClick={this.handleClick}
 					onMouseOver={this.handleMouseOver}
 					onMouseLeave={this.handleMouseLeave}
+					onBookmarkClick={this.handleBookmarkClick}
 				/>
 			})
 		)

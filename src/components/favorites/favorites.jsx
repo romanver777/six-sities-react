@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../reducer';
 
 import FavoritesList from '../favorites-list/favorites-list';
 
@@ -36,10 +38,15 @@ const formatFavoriteList = (arrayOfObject) => {
 
 const Favorites = (props) => {
 
-	const {favoriteList, isAuthRequired, currentUser} = props;
+	const {favoriteList, toggleBookmark, isAuthRequired, currentUser} = props;
+
+	const handleBookmarkClick = (item) => {
+
+		toggleBookmark(item, favoriteList);
+	};
 
 	return (
-		<div className="page page--favorites-empty">
+		<div className={`page ${!favoriteList.length ? `page--favorites-empty` : ``}`}>
 			<header className="header">
 				<div className="container">
 					<div className="header__wrapper">
@@ -75,6 +82,7 @@ const Favorites = (props) => {
 
 							<FavoritesList
 								favoriteList={formatFavoriteList(favoriteList)}
+								onBookmarkClick={handleBookmarkClick}
 							/>
 
 						</section>
@@ -108,4 +116,16 @@ Favorites.propTypes = {
 	currentUser: PropTypes.object,
 };
 
-export default Favorites;
+const mapStateToProps = (state, ownProps) => {
+
+	return Object.assign({}, ownProps, {});
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+	toggleBookmark: (cityOffer, favoriteList) => dispatch(ActionCreator.toggleFavorite(cityOffer, favoriteList)),
+});
+
+export {Favorites}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

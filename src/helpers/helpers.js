@@ -26,17 +26,28 @@ export const getIconParams = (width = ICON_SIZE, height = ICON_SIZE) => ({
 	iconSize: [width, height]
 });
 
-export const getCityOffer = (state, id, city) => {
+const getAllOffers = (state) => {
+	let arr = [];
 
-	let cityOffers = state.hotels.filter((item) => item.city.toLowerCase() === city);
-	let offer = cityOffers[0].offers.filter((it) => it.id === +id);
+	state.hotels.forEach((item) => {
+		if (item.offers.length) {
 
-	return offer[0];
+			for(const offer of item.offers) arr.push(offer);
+		}
+	});
+
+	return arr;
 };
 
-export const getCityOffers = (state, city) => {
+export const getCityOffer = (state, id) => {
 
-	return state.hotels.filter((item) => item.city.toLowerCase() === city)[0].offers;
+	return getAllOffers(state).filter((it) => it.hotelId === +id)[0];
+};
+
+export const getCityOffers = (state, id) => {
+	const city = getCityOffer(state, id).city;
+
+	return getAllOffers(state).filter((it) => it.city === city);
 };
 
 export const getNhoods = (offer, items, number) => {

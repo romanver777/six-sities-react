@@ -1,7 +1,7 @@
 export const APP_ROUTE = {
 	LOGIN: `/login`,
 	ROOT: `/`,
-	OFFER: `/:city/offer/:id`,
+	OFFER: `/offer/:id`,
 	FAVORITES: `/favorites`,
 };
 
