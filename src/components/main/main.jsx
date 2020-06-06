@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../reducer';
 
@@ -9,6 +8,8 @@ import CardList from '../card-list/card-list';
 import CitiesList from '../cities-list/cities-list';
 import CitiesNoPlaces from '../cities-no-places/cities-no-places';
 import Map from '../map/map';
+import Header from '../header/header';
+
 import {getIndex} from '../../helpers/helpers';
 
 class Main extends React.Component {
@@ -125,39 +126,12 @@ class Main extends React.Component {
 
 		return (
 			<div className="page page--gray page--main">
-				<header className="header">
-					<div className="container">
-						<div className="header__wrapper">
-							<div className="header__left">
-								<Link to="/" className="header__logo-link header__logo-link--active buttonLink"
-									onClick={reload}
-								>
-										<img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-								</Link>
-							</div>
-							<nav className="header__nav">
-								<ul className="header__nav-list">
-									<li className="header__nav-item user">
-										<button className="header__nav-link header__nav-link--profile buttonLink">
-											<div className="header__avatar-wrapper user__avatar-wrapper">
-											</div>
 
-											{!isAuthorizationRequired
-												? <span className="header__user-name user__name">
-														<Link to="/favorites">{currentUser.name}</Link>
-													</span>
-												: <span className="header__login">
-														<Link to="/login">Sign in</Link>
-													</span>
-											}
-
-										</button>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</header>
+				<Header
+					isAuthorizationRequired={isAuthorizationRequired}
+					currentUser={currentUser}
+					onLogoClick={reload}
+				/>
 
 				<main className={offers.length ? 'page__main page__main--index'
 																			 : 'page__main page__main--index page__main--index-empty'}>
