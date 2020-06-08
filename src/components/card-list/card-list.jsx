@@ -17,7 +17,7 @@ class CardList extends React.Component {
 	handleClick = (item) => this.props.onClick(item);
 	handleMouseOver = (item) => this.props.onMouseOver(item);
 	handleMouseLeave = (e) => this.props.onMouseLeave(e);
-	handleBookmarkClick = (item) => this.props.onBookmarkClick(item);
+	handleBookmarkClick = (offer, small) => this.props.onBookmarkClick(offer, small);
 
 	isFavorite = (favoriteList, item) => {
 
