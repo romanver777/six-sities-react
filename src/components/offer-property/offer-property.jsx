@@ -32,7 +32,7 @@ class OfferProperty extends React.PureComponent{
 		}
 	}
 
-	handleClick = (item) => this.setState({offer: item});
+	handleClick = (item) => this.setState({offer: item}, () => this.props.onClick(item));
 
 	handleMouseOver = (item) => this.setState((prevState) => {
 
@@ -50,8 +50,7 @@ class OfferProperty extends React.PureComponent{
 		return favoriteList.findIndex((item) => item.hotelId === cityOffer.hotelId) >= 0;
 	};
 
-	handleBookmarkClick = () => {
-
+	handleBookmarkClick = (offer, small) => {
 		const {isAuthorizationRequired, cityOffer, toggleBookmark, favoriteList} = this.props;
 
 		if (isAuthorizationRequired) {
@@ -60,13 +59,17 @@ class OfferProperty extends React.PureComponent{
 
 		} else{
 
-			toggleBookmark(cityOffer, favoriteList);
+			if (small) {
+				toggleBookmark(offer, favoriteList);
+			} else {
+				toggleBookmark(cityOffer, favoriteList);
+			}
 		}
 	};
 
 	render () {
 
-		const {hotels, cityOffers, city, currentUser, isAuthorizationRequired} = this.props;
+		const {hotels, cityOffers, city, currentUser, isAuthorizationRequired, favoriteList} = this.props;
 		const {offer} = this.state;
 
 		if (!offer) return null;
@@ -118,7 +121,7 @@ class OfferProperty extends React.PureComponent{
 
 									<BookmarkButton
 										isActive={this.isFavorite()}
-										onBookmarkClick={this.handleBookmarkClick}
+										onBookmarkClick={(small) => this.handleBookmarkClick(offer, small)}
 										small={false}
 									/>
 
@@ -239,9 +242,11 @@ class OfferProperty extends React.PureComponent{
 								<NeghbourhoodList
 									city={city}
 									items={neighbourhoods}
+									favoriteList={favoriteList}
 									onClick={this.handleClick}
 									onMouseOver={this.handleMouseOver}
 									onMouseLeave={this.handleMouseLeave}
+									onBookmarkClick={this.handleBookmarkClick}
 								/>
 
 							</div>
@@ -280,6 +285,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
 
+
+	onClick: (offer) => dispatch(ActionCreator.setCurrentOffer(offer)),
 	toggleBookmark: (cityOffer, favoriteList) => dispatch(ActionCreator.toggleFavorite(cityOffer, favoriteList)),
 });
 

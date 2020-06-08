@@ -103,7 +103,7 @@ class Main extends React.Component {
 		this.setState({offers});
 	};
 
-	handleBookmarkClick = (item) => {
+	handleBookmarkClick = (offer, small) => {
 
 		const {isAuthorizationRequired, toggleBookmark, favoriteList} = this.props;
 
@@ -113,7 +113,7 @@ class Main extends React.Component {
 
 		} else{
 
-			toggleBookmark(item, favoriteList);
+			toggleBookmark(offer, favoriteList);
 		}
 	};
 

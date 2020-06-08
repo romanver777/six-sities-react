@@ -24,7 +24,7 @@ const BookmarkButton = (props) => {
 	return (
 		<button className={`${prefix}__bookmark-button ${buttonClassActive} button`}
 						type="button"
-						onClick={onBookmarkClick}
+						onClick={() => onBookmarkClick(small)}
 		>
 			<svg className={`${prefix}__bookmark-icon`}
 

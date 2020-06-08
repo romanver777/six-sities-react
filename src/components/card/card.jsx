@@ -11,12 +11,11 @@ const Card = (props) => {
 	const handleClick = (e) => props.onClick(e);
 	const handleMouseOver = (e) => props.onMouseOver(e);
 	const handleMouseLeave = () => props.onMouseLeave();
-	const handleBookmarkClick = () => props.onBookmarkClick(props.item);
+	const handleBookmarkClick = (offer, small) => props.onBookmarkClick(offer, small);
 
   return (
     <article className="cities__place-card place-card"
              id={item.id}
-             onClick={() => handleClick(item)}
              onMouseOver={() => handleMouseOver(item)}
              onMouseLeave={handleMouseLeave}
     >
@@ -28,7 +27,10 @@ const Card = (props) => {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${item.hotelId}`} className="buttonLink">
+        <Link to={`/offer/${item.hotelId}`}
+              className="buttonLink"
+              onClick={() => handleClick(item)}
+        >
           <img className="place-card__image" src={`/` + item.img} width="260" height="200" alt="Place"/>
         </Link>
       </div>
@@ -40,7 +42,7 @@ const Card = (props) => {
           </div>
 
           <BookmarkButton
-            onBookmarkClick={handleBookmarkClick}
+            onBookmarkClick={(small) => handleBookmarkClick(item, small)}
             isActive={isFavorite}
             small={true}
           />
@@ -53,7 +55,10 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${item.hotelId}`} className="card__title buttonLink">{item.title}</Link>
+          <Link to={`/offer/${item.hotelId}`}
+                className="card__title buttonLink"
+                onClick={() => handleClick(item)}
+          >{item.title}</Link>
         </h2>
         <p className="place-card__type">{item.type}</p>
       </div>
