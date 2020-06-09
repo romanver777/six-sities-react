@@ -1,5 +1,5 @@
 const initialState = {
-	city: `Paris`,
+	city: ``,
 	hotels: [],
 	currentOffer: {},
 	favoriteList: [],
