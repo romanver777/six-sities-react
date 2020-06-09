@@ -28,7 +28,13 @@ const init = () => {
     )
 	);
 
-  store.dispatch(Operation.loadHotels());
+  store.dispatch(Operation.loadHotels())
+		.then(() => {
+
+			const city = store.getState().hotels[0].city;
+
+			if (city) store.dispatch(ActionCreator.setCity(city));
+		});
   store.dispatch(Operation.checkAuth());
 
   ReactDom.render(

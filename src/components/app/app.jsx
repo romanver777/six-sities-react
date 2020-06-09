@@ -65,7 +65,7 @@ class App extends React.PureComponent {
 
 	handleOfferClick = (item) => {
 
-		return this.setState({activeOfferId: item.id}, () => this.props.onClick(item));
+		return this.setState({activeOfferId: item.id});
 	};
 
   render() {
@@ -74,13 +74,13 @@ class App extends React.PureComponent {
 
 		let cityOffers;
 
-		if (this.state.isHotelsLoaded) {
+		if (this.state.isHotelsLoaded && city) {
 
 			cityOffers = hotels[getIndex(hotels, city)].offers;
 		}
 
 		return (
-			this.state.isHotelsLoaded
+			this.state.isHotelsLoaded && city
 				? <Router history={history}>
 						<Switch>
 							<Route exact path={APP_ROUTE.ROOT}>
