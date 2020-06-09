@@ -12,6 +12,7 @@ import Main from '../main/main';
 import OfferProperty from '../offer-property/offer-property';
 import SignIn from '../sign-in/sign-in';
 import Favorites from '../favorites/favorites';
+import Loader from '../loader/loader';
 
 class App extends React.PureComponent {
 
@@ -113,7 +114,7 @@ class App extends React.PureComponent {
 							</Route>
 						</Switch>
 					</Router>
-				: `Loading hotels...`
+				: <Loader/>
 		);
   }
 }
