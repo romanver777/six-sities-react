@@ -4,14 +4,18 @@ import {Link} from 'react-router-dom';
 
 const LocationButton = (props) => {
 
-	const {city} = props;
+	const {city, onFavoriteCityClick} = props;
+
+	const handleFavotiteCityClick = () => onFavoriteCityClick(city);
 
 	return (
 		<div className="favorites__locations locations locations--current">
 			<div className="locations__item">
-				<button className="locations__item-link buttonLink">
+				<Link to="/" className="locations__item-link buttonLink"
+							onClick={handleFavotiteCityClick}
+				>
 					<span>{city}</span>
-				</button>
+				</Link>
 			</div>
 		</div>
 	);

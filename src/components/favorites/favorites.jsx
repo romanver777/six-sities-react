@@ -39,12 +39,11 @@ const formatFavoriteList = (arrayOfObject) => {
 
 const Favorites = (props) => {
 
-	const {favoriteList, toggleBookmark, isAuthRequired, currentUser} = props;
+	const {favoriteList, toggleBookmark, cityClick, isAuthRequired, currentUser} = props;
 
-	const handleBookmarkClick = (item) => {
+	const handleBookmarkClick = (item) => toggleBookmark(item, favoriteList);
 
-		toggleBookmark(item, favoriteList);
-	};
+	const handleFavoriteCityClick = (city) => cityClick(city);
 
 	return (
 		<div className={`page ${!favoriteList.length ? `page--favorites-empty` : ``}`}>
@@ -63,6 +62,7 @@ const Favorites = (props) => {
 							<FavoritesList
 								favoriteList={formatFavoriteList(favoriteList)}
 								onBookmarkClick={handleBookmarkClick}
+								onFavoriteCityClick={handleFavoriteCityClick}
 							/>
 
 						</section>
@@ -103,6 +103,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
 
+	cityClick: (city) => dispatch(ActionCreator.setCity(city)),
 	toggleBookmark: (cityOffer, favoriteList) => dispatch(ActionCreator.toggleFavorite(cityOffer, favoriteList)),
 });
 
