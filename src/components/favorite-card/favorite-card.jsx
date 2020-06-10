@@ -6,7 +6,7 @@ import BookmarkButton from '../bookmark-button/bookmark-button';
 
 const FavoriteCard = (props) => {
 
-	const {item, isFavorite} = props;
+	const {item} = props;
 
 	const handleBookmarkClick = () => props.onBookmarkClick(props.item);
 

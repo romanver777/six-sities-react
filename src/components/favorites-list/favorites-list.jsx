@@ -4,20 +4,13 @@ import PropTypes from 'prop-types';
 import LocationButton from '../location-button/location-button';
 import FavoriteCard from '../favorite-card/favorite-card';
 
-const isFavorite = (favoriteList, item) => {
-
-	if (favoriteList) {
-		let isFavorite = favoriteList.filter((it) => it.hotelId === item.hotelId);
-
-		return !!isFavorite.length;
-	}
-};
-
 const FavoritesList = (props) => {
 
-	const {favoriteList} = props;
+	const {favoriteList, onBookmarkClick, onFavoriteCityClick} = props;
 
-	const handleBookmarkClick = (item) => props.onBookmarkClick(item);
+	const handleBookmarkClick = (item) => onBookmarkClick(item);
+
+	const handleFavoriteCityClick = (city) => onFavoriteCityClick(city);
 
 	return (
 		<ul className="favorites__list">
@@ -30,6 +23,7 @@ const FavoritesList = (props) => {
 						<LocationButton
 							city={cityObj.city}
 							key={cityObj.city + ind}
+							onFavoriteCityClick={handleFavoriteCityClick}
 							prefix="favorites"
 						/>
 
@@ -41,7 +35,6 @@ const FavoritesList = (props) => {
 										<FavoriteCard
 											item={hotel}
 											key={hotel.hotelId}
-											/*isFavorite={isFavorite(favoriteList, hotel)}*/
 											onBookmarkClick={handleBookmarkClick}
 										/>
 								);
