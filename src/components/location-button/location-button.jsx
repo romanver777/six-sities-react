@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import {BASE_URL} from '../../const';
+
 const LocationButton = (props) => {
 
 	const {city, onFavoriteCityClick} = props;
@@ -11,7 +13,7 @@ const LocationButton = (props) => {
 	return (
 		<div className="favorites__locations locations locations--current">
 			<div className="locations__item">
-				<Link to="/" className="locations__item-link buttonLink"
+				<Link to={BASE_URL} className="locations__item-link buttonLink"
 							onClick={handleFavotiteCityClick}
 				>
 					<span>{city}</span>

@@ -9,9 +9,10 @@ import NeghbourhoodList from '../neighbourhood-list/neughbourhood-list';
 import FormComments from '../form-comments/form-comments';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import Header from '../header/header';
+import ErrorPage from '../error-page/error-page';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
-import {NUMBER_NEIBOURHOODS} from '../../const';
+import {BASE_URL, NUMBER_NEIBOURHOODS} from '../../const';
 
 class OfferProperty extends React.PureComponent{
 
@@ -55,7 +56,7 @@ class OfferProperty extends React.PureComponent{
 
 		if (isAuthorizationRequired) {
 
-			window.location.assign('/login');
+			window.location.assign(`${BASE_URL}/login`);
 
 		} else{
 
@@ -72,7 +73,7 @@ class OfferProperty extends React.PureComponent{
 		const {hotels, cityOffers, city, currentUser, isAuthorizationRequired, favoriteList} = this.props;
 		const {offer} = this.state;
 
-		if (!offer) return null;
+		if (!offer) return <ErrorPage/>;
 
 		const neighbourhoods = getNhoods(offer, cityOffers, NUMBER_NEIBOURHOODS);
 		const cityCoord = getCityCoord(hotels, city);
@@ -90,22 +91,22 @@ class OfferProperty extends React.PureComponent{
 						<div className="property__gallery-container container">
 							<div className="property__gallery">
 								<div className="property__image-wrapper">
-									<img className="property__image" src="/img/room.jpg" alt="studio"/>
+									<img className="property__image" src={BASE_URL + `/img/room.jpg`} alt="studio"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="/img/apartment-01.jpg" alt="studio01"/>
+									<img className="property__image" src={BASE_URL + `/img/apartment-01.jpg`} alt="studio01"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="/img/apartment-02.jpg" alt="studio02"/>
+									<img className="property__image" src={BASE_URL + `/img/apartment-02.jpg`} alt="studio02"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="/img/apartment-03.jpg" alt="studio03"/>
+									<img className="property__image" src={BASE_URL + `/img/apartment-03.jpg`} alt="studio03"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="/img/studio-01.jpg" alt="studio04"/>
+									<img className="property__image" src={BASE_URL + `/img/studio-01.jpg`} alt="studio04"/>
 								</div>
 								<div className="property__image-wrapper">
-									<img className="property__image" src="/img/apartment-01.jpg" alt="studio05"/>
+									<img className="property__image" src={BASE_URL + `/img/apartment-01.jpg`} alt="studio05"/>
 								</div>
 							</div>
 						</div>

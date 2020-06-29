@@ -4,7 +4,6 @@ import leaflet from 'leaflet';
 
 import {getIconParams, getActiveIconParams} from '../../helpers/helpers';
 
-
 class Map extends React.PureComponent {
 
 	constructor (props) {
