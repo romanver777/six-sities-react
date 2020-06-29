@@ -1,4 +1,4 @@
-import {ICON_SIZE} from '../const';
+import {ICON_SIZE, BASE_URL} from '../const';
 import leaflet from 'leaflet';
 
 export const getIndex = (items, city) => {
@@ -17,16 +17,16 @@ export const getCityCoord = (hotels, city) => {
 };
 
 export const getActiveIconParams = (width = ICON_SIZE, height = ICON_SIZE) => ({
-	iconUrl: `/img/pin-active.svg`,
+	iconUrl: BASE_URL +`/img/pin-active.svg`,
 	iconSize: [width, height]
 });
 
 export const getIconParams = (width = ICON_SIZE, height = ICON_SIZE) => ({
-	iconUrl: `/img/pin.svg`,
+	iconUrl: BASE_URL + `/img/pin.svg`,
 	iconSize: [width, height]
 });
 
-const getAllOffers = (state) => {
+export const getAllOffers = (state) => {
 	let arr = [];
 
 	state.hotels.forEach((item) => {

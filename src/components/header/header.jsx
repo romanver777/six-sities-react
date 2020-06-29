@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import {BASE_URL} from '../../const';
+
 const Header = (props) => {
 
 	const {isAuthorizationRequired, currentUser, onLogoClick} = props;
@@ -11,11 +13,11 @@ const Header = (props) => {
 			<div className="container">
 				<div className="header__wrapper">
 					<div className="header__left">
-						<Link to="/"
+						<Link to={BASE_URL + `/`}
 									className="header__logo-link buttonLink"
 									onClick={onLogoClick}
 						>
-							<img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41"/>
+							<img className="header__logo" src={BASE_URL + `/img/logo.svg`} alt="6 cities logo" width="81" height="41"/>
 						</Link>
 					</div>
 					<nav className="header__nav">
@@ -27,10 +29,10 @@ const Header = (props) => {
 
 									{!isAuthorizationRequired
 										? <span className="header__user-name user__name">
-														<Link to="/favorites">{currentUser.name}</Link>
+														<Link to={BASE_URL + `/favorites`}>{currentUser.name}</Link>
 													</span>
 										: <span className="header__login">
-														<Link to="/login">Sign in</Link>
+														<Link to={BASE_URL + `/login`}>Sign in</Link>
 													</span>
 									}
 

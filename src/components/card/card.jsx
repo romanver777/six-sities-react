@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import BookmarkButton from '../bookmark-button/bookmark-button';
+import {BASE_URL} from '../../const';
 
 const Card = (props) => {
 
@@ -27,11 +28,11 @@ const Card = (props) => {
         : null
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${item.hotelId}`}
+        <Link to={BASE_URL + `/offer/` + item.hotelId}
               className="buttonLink"
               onClick={() => handleClick(item)}
         >
-          <img className="place-card__image" src={`/` + item.img} width="260" height="200" alt="Place"/>
+          <img className="place-card__image" src={BASE_URL + `/` + item.img} width="260" height="200" alt="Place"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -55,7 +56,7 @@ const Card = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${item.hotelId}`}
+          <Link to={BASE_URL + `/offer/${item.hotelId}`}
                 className="card__title buttonLink"
                 onClick={() => handleClick(item)}
           >{item.title}</Link>

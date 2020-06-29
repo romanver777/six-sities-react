@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Router, Switch, Route} from 'react-router-dom';
-import history from '../../history';
+import {Switch, Route} from 'react-router-dom';
 
 import {ActionCreator, Operation} from '../../reducer';
 import {getIndex, getLS, setLS} from '../../helpers/helpers';
@@ -83,8 +82,7 @@ class App extends React.PureComponent {
 
 		return (
 			this.state.isHotelsLoaded && city
-				? <Router history={history}>
-						<Switch>
+				? <Switch>
 							<Route exact path={APP_ROUTE.ROOT}>
 								<Main
 									{...this.props}
@@ -113,9 +111,8 @@ class App extends React.PureComponent {
 										 render={(props) => <OfferProperty {...props}/>}
 							>
 							</Route>
-							<Route component={ErrorPage}/>
+							<Route path={APP_ROUTE.ERROR} component={ErrorPage}/>
 						</Switch>
-					</Router>
 				: <Loader/>
 		);
   }

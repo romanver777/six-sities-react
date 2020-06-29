@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import {BASE_URL} from '../../const';
+
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
 const FavoriteCard = (props) => {
@@ -13,8 +15,8 @@ const FavoriteCard = (props) => {
 	return (
 		<article className="favorites__card place-card">
 			<div className="favorites__image-wrapper place-card__image-wrapper">
-				<Link to={`/offer/${item.hotelId}`} className="buttonLink">
-					<img className="place-card__image" src={`/` + item.img} width="150" height="110" alt="Place"/>
+				<Link to={BASE_URL + `/offer/` + item.hotelId} className="buttonLink">
+					<img className="place-card__image" src={BASE_URL + `/` + item.img} width="150" height="110" alt="Place"/>
 				</Link>
 			</div>
 			<div className="favorites__card-info place-card__info">
@@ -38,7 +40,7 @@ const FavoriteCard = (props) => {
 					</div>
 				</div>
 				<h2 className="place-card__name">
-					<Link to={`/offer/${item.hotelId}`} className="card__title buttonLink">{item.title}</Link>
+					<Link to={BASE_URL + `/offer/` + item.hotelId} className="card__title buttonLink">{item.title}</Link>
 				</h2>
 				<p className="place-card__type">{item.type}</p>
 			</div>

@@ -6,6 +6,7 @@ import {ActionCreator} from '../../reducer';
 
 import FavoritesList from '../favorites-list/favorites-list';
 import Header from '../header/header';
+import {BASE_URL} from '../../const';
 
 const formatFavoriteList = (arrayOfObject) => {
 
@@ -82,7 +83,7 @@ const Favorites = (props) => {
 				</main>
 			}
 			<footer className="footer">
-				<Link to="/" className="footer__logo-link" href="main.html">
+				<Link to={BASE_URL} className="footer__logo-link" href="main.html">
 					<img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
 				</Link>
 			</footer>
