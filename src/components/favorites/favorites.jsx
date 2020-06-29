@@ -46,6 +46,8 @@ const Favorites = (props) => {
 
 	const handleFavoriteCityClick = (city) => cityClick(city);
 
+	document.title = `6 cities - favorites`;
+
 	return (
 		<div className={`page ${!favoriteList.length ? `page--favorites-empty` : ``}`}>
 

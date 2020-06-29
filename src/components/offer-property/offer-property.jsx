@@ -25,11 +25,19 @@ class OfferProperty extends React.PureComponent{
 		}
 	}
 
+	componentDidMount() {
+
+		const {cityOffer} = this.props;
+
+		document.title = `${cityOffer.city} - ${cityOffer.title}`;
+	}
+
 	componentDidUpdate(prevProps) {
 
 		if(prevProps.cityOffer !== this.props.cityOffer) {
 
 			window.scrollTo(0,0);
+			document.title = `${this.props.cityOffer.city} - ${this.props.cityOffer.title}`;
 		}
 	}
 

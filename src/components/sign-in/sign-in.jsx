@@ -17,6 +17,11 @@ class SignIn extends React.PureComponent {
 		}
 	}
 
+	componentDidMount() {
+
+		document.title = `6 cities - sign in`;
+	}
+
 	handleSubmit = (e) => {
 
 		const {onSubmit} = this.props;
