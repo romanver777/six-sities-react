@@ -23,11 +23,20 @@ class Main extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+
+		const {city} = this.props;
+
+		document.title = `6 cities - ${city}`;
+
+	}
+
 	componentDidUpdate(prevProps) {
 
 		if (prevProps.city !== this.props.city) {
 
 			this.handleSortOffers('Popular');
+			document.title = `6 cities - ${this.props.city}`;
 		}
 	}
 
