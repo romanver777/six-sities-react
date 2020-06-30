@@ -32,7 +32,7 @@ const Card = (props) => {
               className="buttonLink"
               onClick={() => handleClick(item)}
         >
-          <img className="place-card__image" src={BASE_URL + `/` + item.img} width="260" height="200" alt="Place"/>
+          <img className="place-card__image" src={item.preview_image} width="260" height="200" alt="Place"/>
         </Link>
       </div>
       <div className="place-card__info">
