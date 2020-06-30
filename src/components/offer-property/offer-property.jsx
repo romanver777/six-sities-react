@@ -11,6 +11,7 @@ import BookmarkButton from '../bookmark-button/bookmark-button';
 import Header from '../header/header';
 import ErrorPage from '../error-page/error-page';
 import Mark from '../mark/mark';
+import PropertyGallery from '../property-gallery/property-gallery';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
 import {BASE_URL, NUMBER_NEIBOURHOODS} from '../../const';
@@ -97,28 +98,11 @@ class OfferProperty extends React.PureComponent{
 
 				<main className="page__main page__main--property">
 					<section className="property">
-						<div className="property__gallery-container container">
-							<div className="property__gallery">
-								<div className="property__image-wrapper">
-									<img className="property__image" src={BASE_URL + `/img/room.jpg`} alt="studio"/>
-								</div>
-								<div className="property__image-wrapper">
-									<img className="property__image" src={BASE_URL + `/img/apartment-01.jpg`} alt="studio01"/>
-								</div>
-								<div className="property__image-wrapper">
-									<img className="property__image" src={BASE_URL + `/img/apartment-02.jpg`} alt="studio02"/>
-								</div>
-								<div className="property__image-wrapper">
-									<img className="property__image" src={BASE_URL + `/img/apartment-03.jpg`} alt="studio03"/>
-								</div>
-								<div className="property__image-wrapper">
-									<img className="property__image" src={BASE_URL + `/img/studio-01.jpg`} alt="studio04"/>
-								</div>
-								<div className="property__image-wrapper">
-									<img className="property__image" src={BASE_URL + `/img/apartment-01.jpg`} alt="studio05"/>
-								</div>
-							</div>
-						</div>
+
+						<PropertyGallery
+							images={offer.images}
+						/>
+
 						<div className="property__container container">
 							<div className="property__wrapper">
 
