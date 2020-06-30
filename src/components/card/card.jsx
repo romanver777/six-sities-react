@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import BookmarkButton from '../bookmark-button/bookmark-button';
+import Mark from '../mark/mark';
 import {BASE_URL} from '../../const';
 
 const Card = (props) => {
@@ -20,13 +21,12 @@ const Card = (props) => {
              onMouseOver={() => handleMouseOver(item)}
              onMouseLeave={handleMouseLeave}
     >
-      { item.mark
-        ? (
-          <div className="place-card__mark">
-            <span>{item.mark}</span>
-          </div>)
-        : null
-      }
+
+      <Mark
+        isPremium={item.is_premium}
+        prefix="place-card"
+      />
+
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={BASE_URL + `/offer/` + item.hotelId}
               className="buttonLink"

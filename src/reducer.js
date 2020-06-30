@@ -152,7 +152,7 @@ const Operation = {
 
 	loadHotels: () => (dispatch, getState, api) => {
 
-		return api.get(`http://www.mocky.io/v2/5ed64aad340000108a06d8e0`)
+		return api.get(`https://run.mocky.io/v3/ed55a7da-a015-4ece-b8f0-cd32e396b4fb`)
 			.then((response) => {
 				dispatch(ActionCreator.loadHotels(response.data));
 			});

@@ -10,6 +10,7 @@ import FormComments from '../form-comments/form-comments';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import Header from '../header/header';
 import ErrorPage from '../error-page/error-page';
+import Mark from '../mark/mark';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
 import {BASE_URL, NUMBER_NEIBOURHOODS} from '../../const';
@@ -120,9 +121,12 @@ class OfferProperty extends React.PureComponent{
 						</div>
 						<div className="property__container container">
 							<div className="property__wrapper">
-								<div className="property__mark">
-									<span>Premium</span>
-								</div>
+
+								<Mark
+									isPremium={offer.is_premium}
+									prefix="property"
+								/>
+
 								<div className="property__name-wrapper">
 									<h1 className="property__name">
 										{offer.title}
