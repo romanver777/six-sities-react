@@ -88,3 +88,8 @@ export const getLS = (name) => {
 export const setLS = (name, arr) => {
 	return localStorage.setItem(name, JSON.stringify(arr));
 };
+
+export const getRandomInt = (max) => {
+
+	return Math.floor(Math.random() * Math.floor(max));
+};

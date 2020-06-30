@@ -94,6 +94,7 @@ class App extends React.PureComponent {
 							</Route>
 							<Route exact path={APP_ROUTE.LOGIN}>
 								<SignIn
+									hotels={hotels}
 									onSubmit={login}
 									onCityClick={cityClick}
 									currentUser={currentUser}

@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '../header/header';
+import LocationButton from '../location-button/location-button';
+import {getRandomInt} from '../../helpers/helpers';
+
 
 class SignIn extends React.PureComponent {
 
@@ -78,7 +81,7 @@ class SignIn extends React.PureComponent {
 
 	render() {
 
-		const {isAuthRequired, currentUser} = this.props;
+		const {hotels, isAuthRequired, currentUser} = this.props;
 
 		return (
 			<div className="page page--gray page--login">
@@ -86,7 +89,7 @@ class SignIn extends React.PureComponent {
 				<Header
 					isAuthorizationRequired={isAuthRequired}
 					currentUser={currentUser}
-					onLogoClick={() => this.handleCityClick('Paris')}
+					onLogoClick={() => this.handleCityClick(hotels[0].city)}
 				/>
 
 				<main className="page__main page__main--login">
@@ -128,13 +131,13 @@ class SignIn extends React.PureComponent {
 								</button>
 							</form>
 						</section>
-						<section className="locations locations--login locations--current">
-							<div className="locations__item">
-								<button className="locations__item-link buttonLink">
-									<span>Amsterdam</span>
-								</button>
-							</div>
-						</section>
+
+						<LocationButton
+							city={hotels[getRandomInt(hotels.length)].city}
+							onFavoriteCityClick={this.handleCityClick}
+							prefix="login"
+						/>
+
 					</div>
 				</main>
 			</div>
@@ -143,7 +146,11 @@ class SignIn extends React.PureComponent {
 }
 
 SignIn.propTypes = {
+	hotels: PropTypes.array.isRequired,
 	onSubmit: PropTypes.func.isRequired,
+	onCityClick: PropTypes.func.isRequired,
+	currentUser: PropTypes.object.isRequired,
+	isAuthRequired: PropTypes.bool.isRequired,
 };
 
 export default SignIn;
