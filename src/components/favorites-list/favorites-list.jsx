@@ -50,6 +50,8 @@ const FavoritesList = (props) => {
 
 FavoritesList.propTypes = {
 	favoriteList: PropTypes.array.isRequired,
+	onBookmarkClick: PropTypes.func.isRequired,
+	onFavoriteCityClick: PropTypes.func.isRequired,
 };
 
 export default FavoritesList;

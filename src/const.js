@@ -11,3 +11,8 @@ export const APP_ROUTE = {
 export const ICON_SIZE = 30;
 
 export const NUMBER_NEIBOURHOODS = 3;
+
+export const LOCATION_BUTTON_CLASS = {
+	FAVORITES: `favorites__locations locations locations--current`,
+	LOGIN: `locations locations--login locations--current`,
+};
