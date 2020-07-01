@@ -13,6 +13,9 @@ import ErrorPage from '../error-page/error-page';
 import Mark from '../mark/mark';
 import PropertyGallery from '../property-gallery/property-gallery';
 import Rating from '../rating/rating';
+import PropertyFeatures from '../property-features/property-features';
+import PropertyInside from '../property-inside/property-inside';
+import Price from '../price/price';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
 import {BASE_URL, NUMBER_NEIBOURHOODS} from '../../const';
@@ -130,56 +133,19 @@ class OfferProperty extends React.PureComponent{
 									prefix="property"
 								/>
 
-								<ul className="property__features">
-									<li className="property__feature property__feature--entire">
-										Entire place
-									</li>
-									<li className="property__feature property__feature--bedrooms">
-										3 Bedrooms
-									</li>
-									<li className="property__feature property__feature--adults">
-										Max 4 adults
-									</li>
-								</ul>
-								<div className="property__price">
-									<b className="property__price-value">&euro;120</b>
-									<span className="property__price-text">&nbsp;night</span>
-								</div>
-								<div className="property__inside">
-									<h2 className="property__inside-title">What&apos;s inside</h2>
-									<ul className="property__inside-list">
-										<li className="property__inside-item">
-											Wi-Fi
-										</li>
-										<li className="property__inside-item">
-											Washing machine
-										</li>
-										<li className="property__inside-item">
-											Towels
-										</li>
-										<li className="property__inside-item">
-											Heating
-										</li>
-										<li className="property__inside-item">
-											Coffee machine
-										</li>
-										<li className="property__inside-item">
-											Baby seat
-										</li>
-										<li className="property__inside-item">
-											Kitchen
-										</li>
-										<li className="property__inside-item">
-											Dishwasher
-										</li>
-										<li className="property__inside-item">
-											Cabel TV
-										</li>
-										<li className="property__inside-item">
-											Fridge
-										</li>
-									</ul>
-								</div>
+								<PropertyFeatures
+									offer={offer}
+								/>
+
+								<Price
+									price={offer.price}
+									prefix="property"
+								/>
+
+								<PropertyInside
+									goods={offer.goods}
+								/>
+
 								<div className="property__host">
 									<h2 className="property__host-title">Meet the host</h2>
 									<div className="property__host-user user">
@@ -205,6 +171,7 @@ class OfferProperty extends React.PureComponent{
 										</p>
 									</div>
 								</div>
+
 								<section className="property__reviews reviews">
 									<h2 className="reviews__title">Reviews &middot; <span
 										className="reviews__amount">{offer.reviews.length}</span></h2>

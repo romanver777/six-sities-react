@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {BASE_URL} from '../../const';
 import Rating from '../rating/rating';
 import Mark from '../mark/mark';
+import Price from '../price/price';
 
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
@@ -29,10 +30,11 @@ const FavoriteCard = (props) => {
 			</div>
 			<div className="favorites__card-info place-card__info">
 				<div className="place-card__price-wrapper">
-					<div className="place-card__price">
-						<b className="place-card__price-value">&euro;{item.price}</b>
-						<span className="place-card__price-text">&#47;&nbsp;{item.priceText}</span>
-					</div>
+
+					<Price
+						price={item.price}
+						prefix="place-card"
+					/>
 
 					<BookmarkButton
 						onBookmarkClick={handleBookmarkClick}
