@@ -13,7 +13,7 @@ const PropertyGallery = (props) => {
 
 				{images.map((img, i) =>
 					(
-						<div className="property__image-wrapper">
+						<div className="property__image-wrapper" key={img}>
 							<img className="property__image" src={img} alt={`studio${i}`}/>
 						</div>
 					)
