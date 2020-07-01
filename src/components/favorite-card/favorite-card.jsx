@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import {BASE_URL} from '../../const';
+import Rating from '../rating/rating';
 
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
@@ -33,12 +34,12 @@ const FavoriteCard = (props) => {
 					/>
 
 				</div>
-				<div className="place-card__rating rating">
-					<div className="place-card__stars rating__stars">
-						<span style={{width: 100 + '%'}}/>
-						<span className="visually-hidden">Rating</span>
-					</div>
-				</div>
+
+				<Rating
+					rating={item.rating}
+					prefix="place-card"
+				/>
+
 				<h2 className="place-card__name">
 					<Link to={BASE_URL + `/offer/` + item.hotelId} className="card__title buttonLink">{item.title}</Link>
 				</h2>

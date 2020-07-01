@@ -12,6 +12,7 @@ import Header from '../header/header';
 import ErrorPage from '../error-page/error-page';
 import Mark from '../mark/mark';
 import PropertyGallery from '../property-gallery/property-gallery';
+import Rating from '../rating/rating';
 
 import {getCityCoord, getCityOffer, getCityOffers, getNhoods} from '../../helpers/helpers';
 import {BASE_URL, NUMBER_NEIBOURHOODS} from '../../const';
@@ -123,13 +124,12 @@ class OfferProperty extends React.PureComponent{
 									/>
 
 								</div>
-								<div className="property__rating rating">
-									<div className="property__stars rating__stars">
-										<span style={{width: 96 + '%'}}/>
-										<span className="visually-hidden">Rating</span>
-									</div>
-									<span className="property__rating-value rating__value">4.8</span>
-								</div>
+
+								<Rating
+									rating={offer.rating}
+									prefix="property"
+								/>
+
 								<ul className="property__features">
 									<li className="property__feature property__feature--entire">
 										Entire place
