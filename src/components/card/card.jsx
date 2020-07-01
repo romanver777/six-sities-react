@@ -6,6 +6,7 @@ import BookmarkButton from '../bookmark-button/bookmark-button';
 import Mark from '../mark/mark';
 import {BASE_URL} from '../../const';
 import Rating from '../rating/rating';
+import Price from '../price/price';
 
 const Card = (props) => {
 
@@ -38,10 +39,11 @@ const Card = (props) => {
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{item.price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{item.priceText}</span>
-          </div>
+
+          <Price
+            price={item.price}
+            prefix="place-card"
+          />
 
           <BookmarkButton
             onBookmarkClick={(small) => handleBookmarkClick(item, small)}
