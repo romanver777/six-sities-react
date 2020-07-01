@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './property-gallery.css';
+
 const PropertyGallery = (props) => {
 
 	const {images} = props;
-console.log(images);
+
 	return (
 		<div className="property__gallery-container container">
 			<div className="property__gallery">

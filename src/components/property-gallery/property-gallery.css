@@ -1,0 +1,13 @@
+.property__gallery {
+    overflow-y: overlay;
+}
+
+.property__gallery::-webkit-scrollbar {
+    width: 5px;
+    background-color: #F5F5F5;
+}
+
+.property__gallery::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
