@@ -5,6 +5,7 @@ const initialState = {
 	favoriteList: [],
 	isAuthorizationRequired: true,
 	currentUser: {},
+	reviews: [],
 };
 
 const getFavoriteIndexFromList = (offer, favoriteList) => {
@@ -36,6 +37,7 @@ const ActionType = {
 	ADD_FAVORITE: `ADD_FAVORITE`,
 	REMOVE_FAVORITE: `REMOVE_FAVORITE`,
 	SET_FAVORITES: `SET_FAVORITES`,
+	SET_REVIEWS: `SET_REVIEWS`,
 };
 
 const ActionCreator = {
@@ -89,6 +91,11 @@ const ActionCreator = {
 	setFavorites: (favoriteList) => ({
 		type: `SET_FAVORITES`,
 		payload: favoriteList,
+	}),
+
+	setReviews: (reviews) => ({
+		type: `SET_REVIEWS`,
+		payload: reviews,
 	}),
 };
 
@@ -144,6 +151,12 @@ const reducer = (state = initialState, action) => {
 				favoriteList: action.payload,
 			});
 
+		case ActionType.SET_REVIEWS:
+			return {
+				...state,
+				reviews: action.payload
+			};
+
 		default: return state;
 	}
 };
@@ -152,7 +165,7 @@ const Operation = {
 
 	loadHotels: () => (dispatch, getState, api) => {
 
-		return api.get(`https://run.mocky.io/v3/f89ac76a-53ae-413f-bd2b-1b5aacf52488`)
+		return api.get(`https://run.mocky.io/v3/c3ca7b37-068d-481a-a3f9-b4da256a5f3d`)
 			.then((response) => {
 				dispatch(ActionCreator.loadHotels(response.data));
 			});
@@ -202,6 +215,13 @@ const Operation = {
 			.catch(() => {});
 	},
 
+	getReviews: (id) => (dispatch, getState, api) => {
+
+		return api.get(`/comments/${id}`)
+			.then((response) => {
+				if(response.data) dispatch(ActionCreator.setReviews(response.data));
+			})
+	},
 
 		// sendFormReview: (formData, city, hotel, user) => (dispatch, getState, api) => {
 	//
