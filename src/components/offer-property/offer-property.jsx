@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../reducer';
+import {ActionCreator, Operation} from '../../reducer';
 
 import ReviewList from '../review-list/review-list';
 import Map from '../map/map';
@@ -34,9 +34,12 @@ class OfferProperty extends React.PureComponent{
 
 	componentDidMount() {
 
-		const {cityOffer} = this.props;
+		const {cityOffer, getReviews} = this.props;
 
 		document.title = `${cityOffer.city} - ${cityOffer.title}`;
+
+		getReviews();
+
 	}
 
 	componentDidUpdate(prevProps) {
@@ -85,7 +88,7 @@ class OfferProperty extends React.PureComponent{
 
 	render () {
 
-		const {hotels, cityOffers, city, currentUser, isAuthorizationRequired, favoriteList} = this.props;
+		const {hotels, cityOffers, city, currentUser, isAuthorizationRequired, favoriteList, reviews} = this.props;
 		const {offer} = this.state;
 
 		if (!offer) return <ErrorPage/>;
@@ -152,10 +155,8 @@ class OfferProperty extends React.PureComponent{
 								/>
 
 								<section className="property__reviews reviews">
-									<h2 className="reviews__title">Reviews &middot; <span
-										className="reviews__amount">{offer.reviews.length}</span></h2>
 
-									<ReviewList reviews={offer.reviews}/>
+									<ReviewList reviews={reviews}/>
 
 									{!isAuthorizationRequired
 										? <FormComments
@@ -223,14 +224,16 @@ const mapStateToProps = (state, ownProps) => {
 		favoriteList: state.favoriteList,
 		isAuthorizationRequired: state.isAuthorizationRequired,
 		currentUser: state.currentUser,
+		reviews: state.reviews,
 	});
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 	onClick: (offer) => dispatch(ActionCreator.setCurrentOffer(offer)),
 	toggleBookmark: (cityOffer, favoriteList) => dispatch(ActionCreator.toggleFavorite(cityOffer, favoriteList)),
+	getReviews: () => dispatch(Operation.getReviews(ownProps.match.params.id)),
 });
 
 export {OfferProperty}
