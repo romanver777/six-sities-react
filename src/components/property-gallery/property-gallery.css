@@ -1,5 +1,7 @@
 .property__gallery {
+    overflow-y: auto;
     overflow-y: overlay;
+    width: 810px;
 }
 
 .property__gallery::-webkit-scrollbar {
