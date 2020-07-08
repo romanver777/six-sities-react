@@ -12,6 +12,7 @@ class SignIn extends React.PureComponent {
 		super(props);
 
 		this.state = {
+			city: '',
 			email: '',
 			password: '',
 			emailValid: false,
@@ -22,7 +23,13 @@ class SignIn extends React.PureComponent {
 
 	componentDidMount() {
 
+		const {hotels} = this.props;
+
 		document.title = `6 cities - sign in`;
+
+		this.setState(() => ({
+			city: hotels[getRandomInt(hotels.length)].city,
+		}));
 	}
 
 	handleSubmit = (e) => {
@@ -133,7 +140,7 @@ class SignIn extends React.PureComponent {
 						</section>
 
 						<LocationButton
-							city={hotels[getRandomInt(hotels.length)].city}
+							city={this.state.city}
 							onFavoriteCityClick={this.handleCityClick}
 							prefix="login"
 						/>
