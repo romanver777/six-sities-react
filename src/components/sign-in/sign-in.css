@@ -1,0 +1,20 @@
+.input_error, .input_valid{
+    border-width: 2px;
+    border-radius: 4px;
+}
+
+.input_error{
+    border-color: red;
+}
+
+.input_error:focus{
+    outline-color: red;
+}
+
+.input_valid{
+    border-color: limegreen;
+}
+
+.input_valid:focus{
+    outline-color: limegreen;
+}

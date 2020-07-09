@@ -1,4 +1,4 @@
-import {ICON_SIZE, BASE_URL} from '../const';
+import {ICON_SIZE, BASE_URL, INPUT_LOGIN_CLASS} from '../const';
 import leaflet from 'leaflet';
 
 export const getIndex = (items, city) => {
@@ -92,4 +92,13 @@ export const setLS = (name, arr) => {
 export const getRandomInt = (max) => {
 
 	return Math.floor(Math.random() * Math.floor(max));
+};
+
+export const 	getInputClassName = (inputValue, inputValid) => {
+
+	if (inputValid) return INPUT_LOGIN_CLASS.VALID;
+
+	if (inputValue.length > 0) return INPUT_LOGIN_CLASS.ERROR;
+
+	return '';
 };

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 import Header from '../header/header';
 import LocationButton from '../location-button/location-button';
-import {getRandomInt} from '../../helpers/helpers';
+import {getRandomInt, getInputClassName} from '../../helpers/helpers';
+import './sign-in.css';
 
 
 class SignIn extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
+		this.emailRef = React.createRef();
 
 		this.state = {
 			city: '',
@@ -110,18 +112,19 @@ class SignIn extends React.PureComponent {
 							>
 								<div className="login__input-wrapper form__input-wrapper">
 									<label className="visually-hidden">E-mail</label>
-									<input className="login__input form__input"
+									<input className={`login__input form__input ${getInputClassName(this.state.email, this.state.emailValid)}`}
 												 type="email"
 												 name="email"
 												 placeholder="Email"
 												 required=""
 												 value={this.state.email}
 												 onChange={this.handleChange}
+												 ref={this.emailRef}
 									/>
 								</div>
 								<div className="login__input-wrapper form__input-wrapper">
 									<label className="visually-hidden">Password</label>
-									<input className="login__input form__input"
+									<input className={`login__input form__input ${getInputClassName(this.state.password, this.state.passwordValid)}`}
 												 type="password"
 												 name="password"
 												 placeholder="Password"
