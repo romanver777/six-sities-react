@@ -29,11 +29,11 @@ const Header = (props) => {
 
 									{!isAuthorizationRequired
 										? <span className="header__user-name user__name">
-														<Link to={BASE_URL + `/favorites`}>{currentUser.name}</Link>
+												{(window.location.pathname !== '/favorites') ? <Link to={BASE_URL + `/favorites`}>{currentUser.name}</Link> : currentUser.name}
 													</span>
 										: <span className="header__login">
-														<Link to={BASE_URL + `/login`}>Sign in</Link>
-													</span>
+											{(window.location.pathname !== '/login') ?	<Link to={BASE_URL + `/login`}>Sign in</Link> : `Sign In`}
+											</span>
 									}
 
 								</button>
