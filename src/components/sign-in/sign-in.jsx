@@ -11,7 +11,6 @@ class SignIn extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
-		this.emailRef = React.createRef();
 
 		this.state = {
 			city: '',
@@ -119,7 +118,6 @@ class SignIn extends React.PureComponent {
 												 required=""
 												 value={this.state.email}
 												 onChange={this.handleChange}
-												 ref={this.emailRef}
 									/>
 								</div>
 								<div className="login__input-wrapper form__input-wrapper">
