@@ -13,6 +13,7 @@ import SignIn from '../sign-in/sign-in';
 import Favorites from '../favorites/favorites';
 import Loader from '../loader/loader';
 import ErrorPage from '../error-page/error-page';
+import PrivateRoute from '../private-route/private-route';
 
 class App extends React.PureComponent {
 
@@ -101,13 +102,11 @@ class App extends React.PureComponent {
 									isAuthRequired={isAuthorizationRequired}
 								/>
 							</Route>
-							<Route exact path={APP_ROUTE.FAVORITES}>
-								<Favorites
-									favoriteList={favoriteList}
-									isAuthRequired={isAuthorizationRequired}
-									currentUser={currentUser}
-								/>
-							</Route>
+							<PrivateRoute exact path={APP_ROUTE.FAVORITES}
+														component={Favorites}
+														isAuthRequired={isAuthorizationRequired}
+														favoriteList={favoriteList}
+														currentUser={currentUser}/>
 							<Route path={APP_ROUTE.OFFER}
 										 render={(props) => <OfferProperty {...props}/>}
 							>
