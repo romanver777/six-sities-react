@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 class FormComments extends React.PureComponent {
 
@@ -66,14 +65,7 @@ class FormComments extends React.PureComponent {
 
 	handleSubmit = (e) => {
 
-		const {onSubmit} = this.props;
 		e.preventDefault();
-
-		onSubmit({
-			rating: this.state.rating,
-			review: this.state.review,
-		});
-
 		this.clearForm(e);
 	};
 
@@ -174,7 +166,6 @@ class FormComments extends React.PureComponent {
 }
 
 FormComments.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
 };
 
 export default FormComments;
