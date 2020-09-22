@@ -47,7 +47,7 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-	isAuthorizationRequired: PropTypes.bool.isRequired,
+	isAuthorizationRequired: PropTypes.bool,
 	currentUser: PropTypes.object.isRequired,
 	onLogoClick: PropTypes.func,
 };
