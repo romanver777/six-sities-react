@@ -95,7 +95,7 @@ const Favorites = (props) => {
 
 Favorites.propTypes = {
 	favoriteList: PropTypes.array.isRequired,
-	isAuthRequired: PropTypes.bool.isRequired,
+	isAuthRequired: PropTypes.bool,
 	currentUser: PropTypes.object,
 };
 
